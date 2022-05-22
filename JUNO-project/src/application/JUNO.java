@@ -1,20 +1,20 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 
-public class Main extends Application {
+public class JUNO extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,900,600,Color.BISQUE);
+		
+			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+			Scene scene = new Scene(root,Color.AQUAMARINE);
 			
 			
 			
