@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+   <children>
+      <Button layoutX="270.0" layoutY="14.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="335.0" text="JUNO">
+         <font>
+            <Font name="Lucida Console" size="55.0" />
+         </font>
+      </Button>
+      <Button fx:id="esci" layoutX="65.0" layoutY="452.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="205.0" text="ESCI">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="iniziaPartita" layoutX="65.0" layoutY="214.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="205.0" text="INIZIA PARTITA" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="login" layoutX="65.0" layoutY="336.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="205.0" text="LOGIN">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

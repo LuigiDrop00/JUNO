@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PreGameSettingsController">
+   <children>
+      <Button layoutX="194.0" layoutY="137.0" mnemonicParsing="false" text="MODALITA1" />
+      <Button layoutX="399.0" layoutY="137.0" mnemonicParsing="false" text="MODALITA2" />
+      <Button layoutX="602.0" layoutY="137.0" mnemonicParsing="false" text="MODALITA3" />
+      <Button layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToMainMenu" text="INDIETRO" />
+      <Button layoutX="320.0" layoutY="386.0" mnemonicParsing="false" onAction="#startGame" prefHeight="112.0" prefWidth="260.0" text="INIZIA PARTITA" />
+   </children>
+</AnchorPane>

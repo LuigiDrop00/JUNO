@@ -13,7 +13,7 @@ public class JUNO extends Application {
 	public void start(Stage primaryStage) {
 		try {
 		
-			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
 			Scene scene = new Scene(root,Color.AQUAMARINE);
 			
 			
