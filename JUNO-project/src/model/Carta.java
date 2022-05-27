@@ -2,11 +2,11 @@ package model;
 
 class Carta {
 
-	Carta(Valore VALORE, Colore COLORE) {
-		this.VALORE = VALORE;
+	Carta(Colore COLORE, Valore VALORE ) {
 		this.COLORE = COLORE;
+		this.VALORE = VALORE;
 	}
 	
-	public final Valore VALORE;
 	public final Colore COLORE;
+	public final Valore VALORE;
 }
