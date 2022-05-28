@@ -8,8 +8,8 @@ public abstract class Entity {
 	//TODO
 	//private Path avatar;
 	private int livello;
-	//SAREBBER
-	private final ArrayList<?> MANO = new ArrayList<>();
+	
+	private final ArrayList<Carta> MANO = new ArrayList<>();
 	
 
 }

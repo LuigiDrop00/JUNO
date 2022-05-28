@@ -57,7 +57,7 @@ public class Mazzo {
 		int nCarte = 1;
 		for(Carta c: mazzo) {
 			
-			System.out.println(c.VALORE + " " + c.COLORE + nCarte++);
+			System.out.println(c.VALORE + " " + c.COLORE + " " + nCarte++);
 		}
 			
 	}

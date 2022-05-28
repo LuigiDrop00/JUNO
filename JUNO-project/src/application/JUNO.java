@@ -17,8 +17,6 @@ public class JUNO extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
 			Scene scene = new Scene(root,Color.AQUAMARINE);
 			
-			
-			
 			primaryStage.setScene(scene);
 		    primaryStage.show();
 			
