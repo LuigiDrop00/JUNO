@@ -23,11 +23,11 @@ public class Player extends Entity implements Serializable {
 		
 	}
 	
-	public static void main(String[] args) {
+	// public static void main(String[] args) {
 		
-		File f= new File("C:\\Users\\ilyas\\Desktop\\JUNO\\JUNO-project\\src\\savedProfiles\\save.txt");
-		System.out.print(f.getAbsolutePath());
+	// 	File f= new File("C:\\Users\\ilyas\\Desktop\\JUNO\\JUNO-project\\src\\savedProfiles\\save.txt");
+	// 	System.out.print(f.getAbsolutePath());
 		
-	}
+	// }
 
 }
