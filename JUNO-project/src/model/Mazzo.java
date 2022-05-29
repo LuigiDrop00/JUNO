@@ -51,7 +51,7 @@ public class Mazzo {
 		mazzo.add(new Carta(Colore.NERO, Valore.PIUQUATTRO));
 
 		
-		stampaMazzo();
+		//stampaMazzo();
 	}
 	public void stampaMazzo() {
 		int nCarte = 1;

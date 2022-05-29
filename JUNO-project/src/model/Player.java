@@ -106,8 +106,9 @@ public class Player extends Entity implements java.io.Serializable {
 		else throw new SaveNotFoundException();
 	}
 	
-	public static void main(String[] args) {
+	 public static void main(String[] args) {
 		
+
 		
         ClassLoader loader = Player.class.getClassLoader();
         java.net.URL url = loader.getResource("model/Player.class");
