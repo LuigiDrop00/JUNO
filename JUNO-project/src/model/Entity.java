@@ -1,5 +1,4 @@
 package model;
-
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,10 +7,14 @@ import java.util.ArrayList;
 public abstract class Entity {
 	
 	private String nickname;
+
 	private String avatar;
 	private int level;
-	private final ArrayList<Integer> HAND = new ArrayList<>();
-	
+	private final ArrayList<Carta> HAND = new ArrayList<>();
+
+	//TODO
+	//private Path avatar;
+
 	Entity (String nickname)  {
 		this.nickname=nickname;
 		String sep= FileSystems.getDefault().getSeparator();
@@ -48,9 +51,6 @@ public abstract class Entity {
 		this.level = level;
 	}
 
-	public ArrayList<Integer> getHAND() {
-		return HAND;
-	}
 
 
 

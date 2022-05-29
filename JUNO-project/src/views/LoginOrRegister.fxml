@@ -2,13 +2,20 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginOrRegisterController">
    <children>
-      <Button layoutX="403.0" layoutY="364.0" mnemonicParsing="false" text="INVIA DATI" />
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@sfondo.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="394.0" layoutY="367.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="113.0" text="INVIA DATI" />
       <TextField layoutX="252.0" layoutY="228.0" prefHeight="31.0" prefWidth="397.0" />
       <Text layoutX="119.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NICKNAME:">
          <font>
@@ -32,5 +39,15 @@
             <Font size="24.0" />
          </font>
       </Text>
+      <Text layoutX="116.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SE NON HAI UN ACCOUNT PUOI REGISTRARTI QUI!">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button layoutX="691.0" layoutY="453.0" mnemonicParsing="false" onAction="#switchToRegistrazione" prefHeight="76.0" prefWidth="160.0" text="REGISTRATI">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
