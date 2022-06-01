@@ -14,6 +14,30 @@ import javafx.stage.Stage;
 
 public class UserSettingsController {
 
+<<<<<<< Updated upstream
+=======
+	public static Image[] profileImages;
+	private static int profileImagesIndex = -1;
+
+	public UserSettingsController() throws IOException {
+
+		File folder = new File("src/profilePic");
+		File[] listOfImages = folder.listFiles();
+
+		profileImages = new Image[listOfImages.length];
+
+		for (int i = 0; i < listOfImages.length; i++) {
+			File rawImage = listOfImages[i];
+			Image image = SwingFXUtils.toFXImage(ImageIO.read(rawImage), null);
+			profileImages[i] = image;
+		}
+		for (Image i : profileImages) {
+			System.out.println(i);
+		}
+
+	}
+
+>>>>>>> Stashed changes
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
@@ -34,7 +58,20 @@ public class UserSettingsController {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+<<<<<<< Updated upstream
 	}
 	
 	
+=======
+	}	
+	public void immagineSuccessiva() {
+		if(profileImagesIndex == profileImages.length-1) profileImagesIndex = -1;
+		profilePic.setImage(profileImages[++profileImagesIndex]);
+	}
+	public void immaginePrecedente() {
+		if(profileImagesIndex == 0 || profileImagesIndex == -1) profileImagesIndex = profileImages.length;
+		profilePic.setImage(profileImages[--profileImagesIndex]);
+	}
+
+>>>>>>> Stashed changes
 }

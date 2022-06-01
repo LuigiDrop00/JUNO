@@ -1,7 +1,8 @@
 package controller;
 
 import java.io.IOException;
-
+import java.util.Observable;
+import java.util.Observer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,28 +15,42 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.IncorrectPasswordException;
+import model.Mazzo;
+import model.Partita;
+import model.Player;
+import model.SaveNotFoundException;
 
-public class GameController {
-	
+public class GameController implements Observer {
+	GameController() throws IncorrectPasswordException, SaveNotFoundException{
+		//logged player
+	Partita partita = new Partita(null);
+	}
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	
+
 	@FXML
 	private Button exitButton;
 	@FXML
 	private AnchorPane scenePane;
-	
-	public void exit(ActionEvent event) throws IOException{
+
+	public void exit(ActionEvent event) throws IOException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("sei sicuro di uscire dalla Partita?");
-		
-		if(alert.showAndWait().get() == ButtonType.OK) {
+
+		if (alert.showAndWait().get() == ButtonType.OK) {
+			// partita = null;
 			root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
-			stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+
 	}
 }

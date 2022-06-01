@@ -1,6 +1,6 @@
 package model;
 
-class Carta {
+public class Carta {
 
 	Carta(Colore COLORE, Valore VALORE ) {
 		this.COLORE = COLORE;
