@@ -18,7 +18,7 @@ public class Player extends Entity implements java.io.Serializable {
 	private int victories;
 	private static final long serialVersionUID = 2451423441245l;
 	
-	Player(String nickname, String password){
+	public Player(String nickname, String password){
 		super(nickname);
 		this.password=password;
 	}
@@ -46,7 +46,7 @@ public class Player extends Entity implements java.io.Serializable {
 			return this;
 			}
 		
-		//createFile() scatena un'eccezione quando il file già esiste
+		//createFile() scatena un'eccezione quando il file giï¿½ esiste
 		catch (IOException e) {		
 			return null;
 		}

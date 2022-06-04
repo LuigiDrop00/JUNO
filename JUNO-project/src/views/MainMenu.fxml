@@ -17,7 +17,7 @@
             <Image url="@sfondoMainMenu.png" />
          </image>
       </ImageView>
-      <Button fx:id="logoutButton" layoutX="65.0" layoutY="452.0" mnemonicParsing="false" onAction="#logout" prefHeight="77.0" prefWidth="205.0" text="ESCI">
+      <Button fx:id="logoutButton" layoutX="65.0" layoutY="452.0" mnemonicParsing="false" onAction="#exit" prefHeight="77.0" prefWidth="205.0" text="ESCI">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>
@@ -26,7 +26,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="login" layoutX="65.0" layoutY="336.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="77.0" prefWidth="205.0" text="LOGIN">
+      <Button layoutX="65.0" layoutY="336.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="77.0" prefWidth="205.0" text="LOGIN">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -48,7 +48,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <ImageView fitHeight="89.0" fitWidth="89.0" layoutX="169.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profilePic" fitHeight="89.0" fitWidth="89.0" layoutX="169.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../profilePic/images6.jpg" />
                </image>
@@ -56,7 +56,7 @@
                   <Blend />
                </effect>
             </ImageView>
-            <Text layoutX="4.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GUIDOLAVESPA" textAlignment="CENTER" wrappingWidth="162.99999964237213">
+            <Text fx:id="nickname" layoutX="4.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GUIDOLAVESPA" textAlignment="CENTER" wrappingWidth="162.99999964237213">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -82,9 +82,9 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Text layoutX="127.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+            <Text fx:id="livello" layoutX="127.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
                <font>
-                  <Font name="System Bold" size="25.0" />
+                  <Font name="System Bold" size="25.0" /> 
                </font>
             </Text>
          </children>

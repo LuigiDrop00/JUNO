@@ -1,8 +1,5 @@
 package model;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +12,7 @@ public class Mazzo {
 		return istanza;
 	}
 	
-	List<Carta> mazzo = new LinkedList<>();
+	LinkedList<Carta> mazzo = new LinkedList<>();
 	
 	private Mazzo(){
 		Colore[] colori = Colore.values();
@@ -53,15 +50,13 @@ public class Mazzo {
 		
 		//stampaMazzo();
 	}
-	public void stampaMazzo() {
-		int nCarte = 1;
-		for(Carta c: mazzo) {
-			
-			System.out.println(c.VALORE + " " + c.COLORE + " " + nCarte++);
-		}
-			
+	public Carta pescaCarta(){
+		return mazzo.pop();
 	}
 	
+	public void mischiaMazzo(){
+		Collections.shuffle(mazzo);
+	}
 	/** checks whether the deck is empty or not **/
 	public boolean isEmpty() { 
 		return mazzo.size() == 0;
