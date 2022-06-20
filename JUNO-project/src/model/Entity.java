@@ -6,10 +6,8 @@ import java.util.ArrayList;
 public abstract class Entity {
 	
 	private String nickname;
-
 	private String avatar;
-	private int level;
-	private final ArrayList<Carta> HAND = new ArrayList<>();
+	public final ArrayList<Card> HAND = new ArrayList<>();
 
 	//TODO
 	//private Path avatar;
@@ -37,20 +35,13 @@ public abstract class Entity {
 		this.avatar=avatar;
 	}
 	
-	public String getAvatarPath() {
+	/*public String getAvatarPath() {
 		String sep= FileSystems.getDefault().getSeparator();
 		return Paths.get("src"+sep+"savedProfiles"+sep+avatar+".jpg").toAbsolutePath().toString();
+	}*/
+	
+	public void drawFrom(Deck deck) throws EmptyDeckException {
+		HAND.add(deck.draw());
 	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-
-
 
 }

@@ -1,5 +1,5 @@
 package model;
 
-public enum Valore {
+public enum Value {
 	ZERO, UNO, DUE, TRE, QUATTRO, CINQUE, SEI, SETTE, OTTO, NOVE, CAMBIAGIRO, STOP, PIUDUE, PIUQUATTRO, CAMBIACOLORE;
 }
