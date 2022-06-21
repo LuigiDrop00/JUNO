@@ -71,12 +71,12 @@ public class Game extends Observable {
     
     private void cardEffect(Card playedCard) {
 		switch(playedCard.VALUE) {
-		case CAMBIAGIRO:	isClockwise*=-1; break;
-		case STOP:	turn+=isClockwise; break;
-		case PIUDUE:	toDraw+=2;	turn+=isClockwise; break;
-		case PIUQUATTRO:	toDraw+=4;	turn+=isClockwise;     //TODO aggiungere argomento toDraw ad Entity()
+		case REVERSE:	isClockwise*=-1; break;
+		case SKIP:	turn+=isClockwise; break;
+		case DRAW2:	toDraw+=2;	turn+=isClockwise; break;
+		case DRAW4:	toDraw+=4;	turn+=isClockwise;     //TODO aggiungere argomento toDraw ad Entity()
 			playedCard.setColor(Color.values() [(int) (5*Math.random())]); break;
-		case CAMBIACOLORE:	playedCard.setColor(Color.values() [(int) (5*Math.random())]); break;
+		case CHANGE:	playedCard.setColor(Color.values() [(int) (5*Math.random())]); break;
 		}
 		
 	}

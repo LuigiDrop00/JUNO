@@ -13,12 +13,12 @@ public class Ai extends Entity{
 
 		//restituisce una lista di carte giocabili secondo le regole
 		ArrayList<Card> playable=(ArrayList<Card>) this.HAND.stream().filter((x)->x.getColor().equals(discard.getColor())||
-				x.getColor()==Color.NERO||x.VALUE.equals(discard.VALUE)).collect(Collectors.toList());
+				x.getColor()==Color.BLACK||x.VALUE.equals(discard.VALUE)).collect(Collectors.toList());
 			
 		if (playable.isEmpty()) {
 			this.drawFrom(deck);
 			Card drawn= this.HAND.get(HAND.size()-1);
-			if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.NERO||drawn.VALUE.equals(discard.VALUE)) return drawn;
+			if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) return drawn;
 			else return null;
 		}
 

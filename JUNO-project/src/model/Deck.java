@@ -28,24 +28,24 @@ public class Deck {
 				deck.add(new Card(colori[i],valori[iValori%10]));
 				iValori++;
 			}
-			deck.add(new Card(colori[i],Value.PIUDUE));
-			deck.add(new Card(colori[i],Value.PIUDUE));
-			deck.add(new Card(colori[i],Value.CAMBIAGIRO));
-			deck.add(new Card(colori[i],Value.CAMBIAGIRO));
-			deck.add(new Card(colori[i],Value.STOP));
-			deck.add(new Card(colori[i],Value.STOP));
+			deck.add(new Card(colori[i],Value.DRAW2));
+			deck.add(new Card(colori[i],Value.DRAW2));
+			deck.add(new Card(colori[i],Value.REVERSE));
+			deck.add(new Card(colori[i],Value.REVERSE));
+			deck.add(new Card(colori[i],Value.SKIP));
+			deck.add(new Card(colori[i],Value.SKIP));
 		}
 		//NUMERO CARTE SPECIALI
 		
 		//---------GENERAZIONE CARTE SPECIALI
-		deck.add(new Card(Color.NERO, Value.CAMBIACOLORE));
-		deck.add(new Card(Color.NERO, Value.CAMBIACOLORE));
-		deck.add(new Card(Color.NERO, Value.CAMBIACOLORE));
-		deck.add(new Card(Color.NERO, Value.CAMBIACOLORE));
-		deck.add(new Card(Color.NERO, Value.PIUQUATTRO));
-		deck.add(new Card(Color.NERO, Value.PIUQUATTRO));
-		deck.add(new Card(Color.NERO, Value.PIUQUATTRO));
-		deck.add(new Card(Color.NERO, Value.PIUQUATTRO));
+		deck.add(new Card(Color.BLACK, Value.CHANGE));
+		deck.add(new Card(Color.BLACK, Value.CHANGE));
+		deck.add(new Card(Color.BLACK, Value.CHANGE));
+		deck.add(new Card(Color.BLACK, Value.CHANGE));
+		deck.add(new Card(Color.BLACK, Value.DRAW4));
+		deck.add(new Card(Color.BLACK, Value.DRAW4));
+		deck.add(new Card(Color.BLACK, Value.DRAW4));
+		deck.add(new Card(Color.BLACK, Value.DRAW4));
 
 		
 		//stampaMazzo();
