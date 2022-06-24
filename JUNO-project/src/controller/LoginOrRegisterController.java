@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.IncorrectPasswordException;
+import model.LoginState;
 import model.Player;
 import model.SaveNotFoundException;
 
@@ -45,27 +46,16 @@ public class LoginOrRegisterController {
 	@FXML
 	private Text errore;
 
-	public void onSubmit(ActionEvent event) throws SaveNotFoundException {
+	public void onSubmit(ActionEvent event) throws SaveNotFoundException, IOException {
 		// INSERTED CREDENTIALS
 		String nick = nickname.getText();
 		String passwd = password.getText();
 		try {
 			if(nick.length() == 0) throw new IncorrectPasswordException();
-			//cerca il giocatore
+			//logs the player, throws exception otherwise
 			Player player = Player.load(nick, passwd);
-			//carica il menu principale
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainMenu.fxml"));
-			root = loader.load();
-			MainMenuController controller = loader.getController();
-			//inserisce il giocatore nel menu
-			controller.logAccount(player);
-			//salta alla scena del menu
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		} catch (IOException e) {
-			System.out.println("something went wrong while retrieving file");
+			LoginState.setLoggedPlayer(player);
+			backToMainMenu(event);
 		} catch (IncorrectPasswordException e) {
 			errore.setText("errore nell'inserimento dati, riprova!");
 		} catch(SaveNotFoundException e) {

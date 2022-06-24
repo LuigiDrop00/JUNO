@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.LoginState;
 import model.Player;
 
 public class RegistrazioneController {
@@ -42,22 +43,13 @@ public class RegistrazioneController {
 				}
 			};
 			timer.schedule(task, 1700);
-			//se c'è qualche errore non prosegue col metodo
+			//se c'e qualche errore non prosegue col metodo
 			return;
 		}
 
 		Player player = new Player(nick, passwd).create();
-
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainMenu.fxml"));
-		root = loader.load();
-
-		MainMenuController controller = loader.getController();
-		controller.logAccount(player);
-		
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		LoginState.setLoggedPlayer(player);
+		backToMainMenu(event);
 	}
 	public void backToLogin(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("/views/LoginOrRegister.fxml"));
