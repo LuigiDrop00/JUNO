@@ -22,4 +22,6 @@ public class SettingsController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	
 }

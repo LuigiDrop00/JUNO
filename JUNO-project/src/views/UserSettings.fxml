@@ -31,12 +31,18 @@
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Button>
-      <Button layoutX="234.0" layoutY="300.0" mnemonicParsing="false" onAction="#immaginePrecedente" prefHeight="52.0" prefWidth="103.0" text="Immagine precedente" wrapText="true" />
-      <Button layoutX="348.0" layoutY="300.0" mnemonicParsing="false" onAction="#immagineSuccessiva" prefHeight="52.0" prefWidth="92.0" text="Immagine Successiva" wrapText="true" />
-      <TextField layoutX="463.0" layoutY="78.0" />
+      <Button layoutX="226.0" layoutY="300.0" mnemonicParsing="false" onAction="#immaginePrecedente" prefHeight="52.0" prefWidth="103.0" text="Immagine precedente" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+      <Button layoutX="337.0" layoutY="300.0" mnemonicParsing="false" onAction="#immagineSuccessiva" prefHeight="52.0" prefWidth="103.0" text="Immagine Successiva" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Button>
+      <TextField fx:id="nickField" layoutX="463.0" layoutY="78.0" />
       <ImageView fx:id="profilePic" fitHeight="213.0" fitWidth="200.0" layoutX="237.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../profilePic/images6.jpg" />
+            <Image url="@../profilePic/default.jpg" />
          </image>
       </ImageView>
       <Pane layoutX="237.0" layoutY="73.0" prefHeight="211.0" prefWidth="200.0" snapToPixel="false" style="-fx-border-width: 6.5; -fx-border-color: black; -fx-border-radius: 5;" />

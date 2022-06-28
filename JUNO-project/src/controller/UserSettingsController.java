@@ -12,33 +12,38 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.LoginState;
 
 public class UserSettingsController {
 
-	public static Image[] profileImages;
-	private static int profileImagesIndex = -1;
-
+	public Image[] profileImages;
+	private int profileImagesIndex = -1;
+	private File[] listOfImages = new File("src/profilePic").listFiles();
+	
+	@FXML
+	private TextField nickField;
+	
+	@FXML
+	public void initialize() {
+		nickField.setText(LoginState.getLoggedPlayer().getNickname());
+	}
+	
 	public UserSettingsController() throws IOException {
-
-		File folder = new File("src/profilePic");
-		File[] listOfImages = folder.listFiles();
-
+		
 		profileImages = new Image[listOfImages.length];
-
+		
 		for (int i = 0; i < listOfImages.length; i++) {
 			File rawImage = listOfImages[i];
+			System.out.println(rawImage.getPath());
 			Image image = SwingFXUtils.toFXImage(ImageIO.read(rawImage), null);
+			
 			profileImages[i] = image;
 		}
-
-		for (Image i : profileImages) {
-			System.out.println(i);
-		}
-
 	}
 
 	private Stage stage;
@@ -54,7 +59,10 @@ public class UserSettingsController {
 		alert.setHeaderText("stai per tornare al menu' principale!");
 		alert.setContentText("vuoi salvare gli eventuali cambiamenti?");
 		if (alert.showAndWait().get() == ButtonType.OK) {
-			System.out.println("salvando le impostazioni!");
+			//imposta l'immagine scelta con quella del profilo
+			if(profileImagesIndex == -1) profileImagesIndex = 0;
+			LoginState.getLoggedPlayer().setAvatar(listOfImages[profileImagesIndex].getPath());
+			LoginState.getLoggedPlayer().setNickname(nickField.getText());
 		}
 
 		root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));

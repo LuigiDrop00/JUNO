@@ -1,6 +1,7 @@
 package model;
 
 import java.io.FileInputStream;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -16,11 +17,20 @@ public class Player extends Entity implements java.io.Serializable {
 	private String password;
 	private int games;
 	private int victories;
+	private int exp;
 	private static final long serialVersionUID = 2451423441245l;
 	
-	Player(String nickname, String password){
+	public Player(String nickname, String password){
 		super(nickname);
 		this.password=password;
+	}
+	
+	public int getLevel() {
+		return (int) (Math.log(exp/10 +2)/Math.log(2));
+	}
+	
+	public void expUp(int up) {
+		exp+=up;
 	}
 	
 	public Player create() {
@@ -38,7 +48,7 @@ public class Player extends Entity implements java.io.Serializable {
 			os.writeObject(password);
 			os.writeObject(getNickname());
 			os.writeObject(getAvatar());
-			os.writeObject(getLevel());
+			os.writeObject(exp);
 			os.writeObject(games);
 			os.writeObject(victories);
 			os.close();
@@ -46,7 +56,7 @@ public class Player extends Entity implements java.io.Serializable {
 			return this;
 			}
 		
-		//createFile() scatena un'eccezione quando il file già esiste
+		//createFile() scatena un'eccezione quando il file giï¿½ esiste
 		catch (IOException e) {		
 			return null;
 		}
@@ -67,7 +77,7 @@ public class Player extends Entity implements java.io.Serializable {
 		
 		nickname = (String) is.readObject();
 		String avatar = (String) is.readObject();
-		int level = (int) is.readObject();
+		int exp = (int) is.readObject();
 		int games = (int) is.readObject();
 		int victories = (int) is.readObject();
 		
@@ -75,7 +85,7 @@ public class Player extends Entity implements java.io.Serializable {
 		
 		Player player = new Player(nickname, password);
 		player.setAvatar(avatar);
-		player.setLevel(level);
+		player.exp=exp;
 		player.games=games;
 		player.victories=victories;
 		
@@ -98,7 +108,7 @@ public class Player extends Entity implements java.io.Serializable {
 		if (Files.exists(path)) {
 			try {
 				Files.delete(path);
-			} catch (IOException e) {
+			} catch (IOException e) {   //questo errore capita solo se c'è un interruzione inaspettata
 				e.printStackTrace();
 			}
 			this.create();
@@ -106,7 +116,7 @@ public class Player extends Entity implements java.io.Serializable {
 		else throw new SaveNotFoundException();
 	}
 	
-	 public static void main(String[] args) {
+/*	 public static void main(String[] args) {
 		
 
 		
@@ -128,8 +138,9 @@ public class Player extends Entity implements java.io.Serializable {
 		} catch (IncorrectPasswordException | SaveNotFoundException e) {
 			e.printStackTrace();
 		}
-        System.out.println(p2.password);
+		p2.expUp(59);
+        System.out.println(p2.getLevel());
         
-	} 
+	} */
 
 }

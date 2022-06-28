@@ -2,6 +2,9 @@ package controller;
 
 import java.io.IOException;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class GameController {
+public class GameController implements Observer{
 	
 	private Stage stage;
 	private Scene scene;
@@ -37,5 +40,11 @@ public class GameController {
 			stage.setScene(scene);
 			stage.show();
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }
