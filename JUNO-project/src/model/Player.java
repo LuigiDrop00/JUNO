@@ -33,6 +33,21 @@ public class Player extends Entity implements java.io.Serializable {
 		exp+=up;
 	}
 	
+	@Override
+	public void setNickname(String nickname) {
+		
+		String sep= FileSystems.getDefault().getSeparator();
+		Path path= Paths.get("src"+sep+"savedProfiles"+sep+getNickname()+".txt").toAbsolutePath();	
+		try {
+			Files.delete(path);
+		} catch (IOException e) {	//questo errore capita solo se c'è un interruzione inaspettata
+			e.printStackTrace();
+		}
+		
+		super.setNickname(nickname);
+		this.create();
+	}
+	
 	public Player create() {
 		
 		String sep= FileSystems.getDefault().getSeparator();
@@ -114,6 +129,12 @@ public class Player extends Entity implements java.io.Serializable {
 			this.create();
 		}
 		else throw new SaveNotFoundException();
+	}
+
+	@Override
+	void play(Card discard, Deck deck) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 /*	 public static void main(String[] args) {

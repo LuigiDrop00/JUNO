@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.Observable;
@@ -15,8 +17,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Game;
+import model.LoginState;
+import model.Player;
 
 public class GameController implements Observer{
 	
@@ -29,11 +35,20 @@ public class GameController implements Observer{
 	@FXML
 	private AnchorPane scenePane;
 	
+	Game game= new Game();
+	@FXML
+	public void initialize() throws FileNotFoundException {
+		game.deleteObservers();
+		game.addObserver(this);
+		game.aiTurn();
+		
+	}
+	
 	public void exit(ActionEvent event) throws IOException{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("sei sicuro di uscire dalla Partita?");
 		
-		if(alert.showAndWait().get() == ButtonType.OK) {
+		if(alert.showAndWait().get() == ButtonType.OK) {		
 			root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
 			stage = (Stage)((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
@@ -44,7 +59,7 @@ public class GameController implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		System.out.println(arg+game.toString());
 		
 	}
 }

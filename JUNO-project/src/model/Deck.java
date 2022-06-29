@@ -50,16 +50,26 @@ public class Deck {
 		
 		//stampaMazzo();
 	}
-	public Card draw() throws EmptyDeckException{
+	Card draw(){
+		if (deck.isEmpty()) refill(Game.pile);
 		return deck.pop();
 	}
-	
+	//usata solo da refill?
 	public void shuffleDeck(){
 		Collections.shuffle(deck);
 	}
 	/** checks whether the deck is empty or not **/
 	public boolean isEmpty() { 
 		return deck.size() == 0;
+	}
+	
+	void refill(LinkedList<Card> pile) {
+		while(!pile.isEmpty()) {
+			Card card=pile.pop();
+			if (card.VALUE==Value.CHANGE) card.setColor(Color.BLACK);
+			deck.add(card);
+			shuffleDeck();
+		}
 	}
 	
 }
