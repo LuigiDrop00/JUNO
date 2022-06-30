@@ -48,6 +48,6 @@ public abstract class Entity {
 		for (int i=0; i<n; i++) drawFrom();
 	}
 	
-	abstract void play(Card discard, Deck deck);
+	void play(Card discard) {}
 
 }

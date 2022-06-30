@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /** a class that represents a game and its features */
+@SuppressWarnings("deprecation")
 public class Game extends Observable {
 	
 	private class Ai extends Entity{
@@ -14,8 +15,8 @@ public class Game extends Observable {
 		public Ai(String nickname) {
 			super(nickname);
 		}
-	
-		public void play(Card discard, Deck deck) {
+		@Override
+		public void play(Card discard) {
 
 			//restituisce una lista di carte giocabili secondo le regole
 			ArrayList<Card> playable=(ArrayList<Card>) this.HAND.stream().filter((x)->x.getColor().equals(discard.getColor())||
@@ -24,25 +25,27 @@ public class Game extends Observable {
 			if (playable.isEmpty()) {
 					this.drawFrom();
 					setChanged();
-					notifyObservers("aiDraw"+turn);
+					notifyObservers("Draw");
 				Card drawn= this.HAND.get(HAND.size()-1);
 				if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 					cardEffect(drawn);
 		    		pile.addFirst(drawn);
+		    		HAND.remove(drawn);
 					setChanged();
-					notifyObservers("aiPlay"+turn);
+					notifyObservers("Play");
 				}
 				else {
 					setChanged();
-					notifyObservers("aiPass"+turn);
+					notifyObservers("Pass");
 				}
 			}
 
 			else {
 				cardEffect(playable.get(0));
 	    		pile.addFirst(playable.get(0));
+	    		HAND.remove(playable);
 				setChanged();
-				notifyObservers("aiPlay"+turn);
+				notifyObservers("Play");
 			}
 		}
 	}
@@ -93,12 +96,20 @@ public class Game extends Observable {
     public void aiTurn() {
     	Card discarded=pile.get(0);
     	while (increaseTurn()!=0) {
-    		
-    		players[turn].play(discarded, deck);
+    		Ai ai=(Ai) players[turn];
+    		ai.play(discarded);
+    		if (ai.HAND.size()==1) {
+				setChanged();
+				notifyObservers("Uno");
+    		}
+    		if (ai.HAND.size()==0) {
+    			gameOver();
+				setChanged();
+				notifyObservers("Loss");
+				break;
+    		}
     		discarded=pile.get(0);
-
     	}
-    	//playerTurn=true;
     }
     
     private void cardEffect(Card playedCard) {
@@ -116,9 +127,9 @@ public class Game extends Observable {
     private void changeColor(Card playedCard) {
     	if (turn==0) {
 			setChanged();
-			notifyObservers("changeColor"); //TODO far scegliere il colore al giocatore nella view
+			notifyObservers("ChangeColor"); //TODO far scegliere il colore al giocatore nella view
     	}
-    	else playedCard.setColor(Color.values() [(int) (5*Math.random())]);
+    	else playedCard.setColor(Color.values() [(int) (5*Math.random())]); //TODO notify?
     }
     
     //TODO far chiamare questo metodo quando il giocatore preme il pulsante passaTurno o dopo che gioca una carta
@@ -130,7 +141,44 @@ public class Game extends Observable {
 	public void playerDraw() {
 			p1.drawFrom();
 			setChanged();
-			notifyObservers("playerDraw");
+			notifyObservers("Draw");
+	}
+	
+	public void playerPlay(Card discard) {
+		Card drawn= pile.get(0);
+		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
+			if (p1.HAND.size()==2 && uno==false) {
+				p1.drawFrom(2);
+				setChanged();
+				notifyObservers("NoUno");
+			}
+			cardEffect(discard);
+			p1.HAND.remove(discard);
+			pile.addFirst(discard);
+			setChanged();
+			notifyObservers("Play");
+    		if (p1.HAND.size()==0) {
+    			gameOver();
+				setChanged();
+				notifyObservers("Loss");
+    		}	
+    		else	playerEndTurn();
+		}	
+		else {
+			setChanged();
+			notifyObservers("InvalidPlay");
+		}	
+	}
+	
+	
+	public void pressUno(Card discard) {
+		if (p1.HAND.size()==2 && uno==false) {
+			uno=true;
+			playerPlay(discard);         
+			setChanged();
+			notifyObservers("Uno");
+			uno=false;
+		}
 	}
 	
 	public void gameOver() {  //TODO capire da dove chiamarlo
@@ -146,8 +194,12 @@ public class Game extends Observable {
 					}
 				} 	
 			}).reduce((x,y)->x+y).get());
+			p1.victoriesUp();
 		}
-		else p1.expUp(20);
+		else {
+			p1.expUp(20);
+			p1.lossesUp();
+		}
 	}
 
 
