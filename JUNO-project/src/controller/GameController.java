@@ -24,6 +24,7 @@ import model.Game;
 import model.LoginState;
 import model.Player;
 
+@SuppressWarnings("deprecation")
 public class GameController implements Observer{
 	
 	private Stage stage;

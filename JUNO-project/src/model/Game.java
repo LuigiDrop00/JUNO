@@ -51,7 +51,7 @@ public class Game extends Observable {
 	}
 
     private Player p1;
-    final public Entity[] players= {p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
+    final public Entity[] players;
 
     final static private Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();
@@ -77,10 +77,10 @@ public class Game extends Observable {
         //TODO cardEffect?
         p1=LoginState.getLoggedPlayer();
 		pile.addFirst(deck.draw());
+		players= new Entity[]{p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
 		for (Entity e:players) {
 			e.drawFrom(7);
-			}
-        
+			}       
         /*
            1. Partita generata, giocatori caricati(addObserver),
              mazzo/scarti creato, giroOrario(ordine dei turni con id)
@@ -90,7 +90,6 @@ public class Game extends Observable {
             3. gameOver() assegnazione exp, partite vinte/perse/giocate ritorna a menu
                 principale
         */
-
     }
     
     public void aiTurn() {
