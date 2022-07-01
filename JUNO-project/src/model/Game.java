@@ -39,7 +39,6 @@ public class Game extends Observable {
 					notifyObservers("Pass");
 				}
 			}
-
 			else {
 				cardEffect(playable.get(0));
 	    		pile.addFirst(playable.get(0));
