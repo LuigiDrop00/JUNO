@@ -41,7 +41,6 @@ public class GameController implements Observer{
 	public void initialize() throws FileNotFoundException {
 		game=new Game();
 		players=game.players;
-		game.deleteObservers();
 		game.addObserver(this);
 		game.aiTurn();
 		
@@ -65,14 +64,14 @@ public class GameController implements Observer{
 		String action= (String) arg;
 		Entity p= players[game.getTurn()];
 		switch (action) {
-		case "Draw": p.HAND.get(p.HAND.size()-1); break;
-		case "Play": 
-		case "Pass":
-		case "Uno":
-		case "NoUno":
-		case "IncorrectPlay":
-		case "Victory":
-		case "Loss": 
+		case "Draw": p.HAND.get(p.HAND.size()-1); break; //TODO play animazione e suono di pesca; e aggiorna le carte in mano
+		case "Play": break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
+		case "Pass": break;
+		case "Uno": break; //TODO play suono uno
+		case "NoUno": break;
+		case "IncorrectPlay": break;
+		case "Victory": break; //TODO play musica vittoriosa? e mostrare schermata risultati?
+		case "Loss": break; //TODO play musica triste? e mostrare schermata risultati?
 		}
 		
 		System.out.println(arg);

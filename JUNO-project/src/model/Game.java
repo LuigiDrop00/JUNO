@@ -161,6 +161,7 @@ public class Game extends Observable {
 				notifyObservers("Loss");
     		}	
     		else	playerEndTurn();
+    		uno=false;
 		}	
 		else {
 			setChanged();
@@ -169,13 +170,11 @@ public class Game extends Observable {
 	}
 	
 	
-	public void pressUno(Card discard) {
-		if (p1.HAND.size()==2 && uno==false) {
-			uno=true;
-			playerPlay(discard);         
+	public void pressUno() {
+		if (p1.HAND.size()==2 && uno==false && turn==0) {
+			uno=true;       
 			setChanged();
 			notifyObservers("Uno");
-			uno=false;
 		}
 	}
 	

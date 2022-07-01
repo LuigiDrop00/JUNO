@@ -1,5 +1,8 @@
 package model;
 
+import java.nio.file.FileSystems;
+import java.util.regex.Pattern;
+
 class Card {
 
 	Card(Color color, Value VALUE ) {
@@ -30,18 +33,15 @@ class Card {
 		}
 	}
 	
-	static Card stringToCard(String s) {
+	static Card pathToCard(String s) {
+		String [] a=s.split(Pattern.quote(FileSystems.getDefault().getSeparator()));
+		s=a[a.length-1];
 		String[] args=s.substring(0,s.length()-4).split("_");
 		int c=Character.digit(args[1].charAt(0), 10);
 		Value value;
 		if (c>=0) value=Value.values()[c];
 		else value=Value.valueOf(args[1].toUpperCase());
 		return new Card(Color.valueOf(args[0].toUpperCase()), value);
-	}
-	
-	public static void main(String[] args) {
-		int c=Character.digit("a".charAt(0), 10);
-		System.out.print(c);
 	}
 	
 }
