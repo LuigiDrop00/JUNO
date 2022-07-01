@@ -42,7 +42,7 @@ public class Game extends Observable {
 			else {
 				cardEffect(playable.get(0));
 	    		pile.addFirst(playable.get(0));
-	    		HAND.remove(playable);
+	    		HAND.remove(playable.get(0));
 				setChanged();
 				notifyObservers("Play");
 			}
@@ -91,10 +91,11 @@ public class Game extends Observable {
         */
     }
     
+  //TODO far chiamare questo metodo quando il giocatore preme il pulsante passaTurno o dopo che gioca una carta
     public void aiTurn() {
     	Card discarded=pile.get(0);
     	while (increaseTurn()!=0) {
-    		Ai ai=(Ai) players[turn];
+    		Ai ai=(Ai) players[getTurn()];
     		ai.play(discarded);
     		if (ai.HAND.size()==1) {
 				setChanged();
@@ -114,8 +115,8 @@ public class Game extends Observable {
 		switch(playedCard.VALUE) {
 		case REVERSE:	isClockwise= !isClockwise; break;
 		case SKIP:	increaseTurn(); break;
-		case DRAW2:	players[increaseTurn()].drawFrom(2); break;
-		case DRAW4:	players[increaseTurn()].drawFrom(4);     
+		case DRAW2:	playerDraw(players[increaseTurn()],2); break;
+		case DRAW4:	playerDraw(players[increaseTurn()],4);     
 			changeColor(playedCard); break;
 		case CHANGE:	changeColor(playedCard); break;
 		
@@ -123,30 +124,21 @@ public class Game extends Observable {
 	}
     
     private void changeColor(Card playedCard) {
-    	if (turn==0) {
-			setChanged();
-			notifyObservers("ChangeColor"); //TODO far scegliere il colore al giocatore nella view
-    	}
-    	else playedCard.setColor(Color.values() [(int) (5*Math.random())]); //TODO notify?
-    }
-    
-    //TODO far chiamare questo metodo quando il giocatore preme il pulsante passaTurno o dopo che gioca una carta
-	public void playerEndTurn() {
-		increaseTurn();
-    	aiTurn();
+    	if (getTurn()!=0) playedCard.setColor(Color.values() [(int) (5*Math.random())]); //TODO notify?
     }
 	
-	public void playerDraw() {
-			p1.drawFrom();
+	public void playerDraw(Entity e, int n) {
+		for (int i=0; i<n; i++) {
+			e.drawFrom();
 			setChanged();
-			notifyObservers("Draw");
+			notifyObservers("Draw");}
 	}
 	
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
 		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 			if (p1.HAND.size()==2 && uno==false) {
-				p1.drawFrom(2);
+				playerDraw(p1,2);
 				setChanged();
 				notifyObservers("NoUno");
 			}
@@ -158,9 +150,9 @@ public class Game extends Observable {
     		if (p1.HAND.size()==0) {
     			gameOver();
 				setChanged();
-				notifyObservers("Loss");
+				notifyObservers("Win");
     		}	
-    		else	playerEndTurn();
+    		else	aiTurn();
     		uno=false;
 		}	
 		else {
@@ -169,9 +161,15 @@ public class Game extends Observable {
 		}	
 	}
 	
+	public void playerPlay(Card discard, Color color) {
+		playerPlay(discard);
+		discard.setColor(color);
+	}
+	
+	
 	
 	public void pressUno() {
-		if (p1.HAND.size()==2 && uno==false && turn==0) {
+		if (p1.HAND.size()==2 && uno==false && getTurn()==0) {
 			uno=true;       
 			setChanged();
 			notifyObservers("Uno");

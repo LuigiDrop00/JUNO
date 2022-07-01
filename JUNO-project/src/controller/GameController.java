@@ -65,10 +65,10 @@ public class GameController implements Observer{
 		Entity p= players[game.getTurn()];
 		switch (action) {
 		case "Draw": p.HAND.get(p.HAND.size()-1); break; //TODO play animazione e suono di pesca; e aggiorna le carte in mano
-		case "Play": break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
-		case "Pass": break;
+		case "Play": Game.pile.get(Game.pile.size()-1); //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
+		case "Pass": break; //TODO aggiorna il colore
 		case "Uno": break; //TODO play suono uno
-		case "NoUno": break;
+		case "NoUno": break; 
 		case "IncorrectPlay": break;
 		case "Victory": break; //TODO play musica vittoriosa? e mostrare schermata risultati?
 		case "Loss": break; //TODO play musica triste? e mostrare schermata risultati?
