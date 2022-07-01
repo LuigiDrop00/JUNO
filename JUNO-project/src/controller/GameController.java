@@ -1,10 +1,10 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.util.Observable;
 import java.util.Observer;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +15,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Entity;
+import model.Game;
+import model.LoginState;
+import model.Player;
 
+@SuppressWarnings("deprecation")
 public class GameController implements Observer{
 	
 	private Stage stage;
@@ -29,11 +35,23 @@ public class GameController implements Observer{
 	@FXML
 	private AnchorPane scenePane;
 	
+	Game game;
+	Entity[] players;
+	@FXML
+	public void initialize() throws FileNotFoundException {
+		game=new Game();
+		players=game.players;
+		game.deleteObservers();
+		game.addObserver(this);
+		game.aiTurn();
+		
+	}
+	
 	public void exit(ActionEvent event) throws IOException{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("sei sicuro di uscire dalla Partita?");
 		
-		if(alert.showAndWait().get() == ButtonType.OK) {
+		if(alert.showAndWait().get() == ButtonType.OK) {		
 			root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
 			stage = (Stage)((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
@@ -44,7 +62,20 @@ public class GameController implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		String action= (String) arg;
+		Entity p= players[game.getTurn()];
+		switch (action) {
+		case "Draw": p.HAND.get(p.HAND.size()-1); break;
+		case "Play": 
+		case "Pass":
+		case "Uno":
+		case "NoUno":
+		case "IncorrectPlay":
+		case "Victory":
+		case "Loss": 
+		}
+		
+		System.out.println(arg);
 		
 	}
 }

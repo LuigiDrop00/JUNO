@@ -40,8 +40,14 @@ public abstract class Entity {
 		return Paths.get("src"+sep+"savedProfiles"+sep+avatar+".jpg").toAbsolutePath().toString();
 	}*/
 	
-	public void drawFrom(Deck deck) throws EmptyDeckException {
-		HAND.add(deck.draw());
+	public void drawFrom() {
+		HAND.add(Deck.getInstance().draw());
 	}
+	
+	void drawFrom(int n) {
+		for (int i=0; i<n; i++) drawFrom();
+	}
+	
+	void play(Card discard) {}
 
 }

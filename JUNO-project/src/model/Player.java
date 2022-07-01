@@ -15,7 +15,7 @@ import java.nio.file.*;
 public class Player extends Entity implements java.io.Serializable {
 	
 	private String password;
-	private int games;
+	private int losses;
 	private int victories;
 	private int exp;
 	private static final long serialVersionUID = 2451423441245l;
@@ -31,6 +31,21 @@ public class Player extends Entity implements java.io.Serializable {
 	
 	public void expUp(int up) {
 		exp+=up;
+	}
+	
+	@Override
+	public void setNickname(String nickname) {
+		
+		String sep= FileSystems.getDefault().getSeparator();
+		Path path= Paths.get("src"+sep+"savedProfiles"+sep+getNickname()+".txt").toAbsolutePath();	
+		try {
+			Files.delete(path);
+		} catch (IOException e) {	//questo errore capita solo se c'è un interruzione inaspettata
+			e.printStackTrace();
+		}
+		
+		super.setNickname(nickname);
+		this.create();
 	}
 	
 	public Player create() {
@@ -49,7 +64,7 @@ public class Player extends Entity implements java.io.Serializable {
 			os.writeObject(getNickname());
 			os.writeObject(getAvatar());
 			os.writeObject(exp);
-			os.writeObject(games);
+			os.writeObject(losses);
 			os.writeObject(victories);
 			os.close();
 			
@@ -86,7 +101,7 @@ public class Player extends Entity implements java.io.Serializable {
 		Player player = new Player(nickname, password);
 		player.setAvatar(avatar);
 		player.exp=exp;
-		player.games=games;
+		player.losses=games;
 		player.victories=victories;
 		
 		return player;
@@ -115,7 +130,26 @@ public class Player extends Entity implements java.io.Serializable {
 		}
 		else throw new SaveNotFoundException();
 	}
+
+	public int getLosses() {
+		return losses;
+	}
+
+	void lossesUp() {
+		++losses;
+	}
 	
+	public int getVictories() {
+		return victories;
+	}
+
+	void victoriesUp() {
+		++victories;
+	}
+	
+	public int getGames() {
+		return losses+victories;
+	}
 /*	 public static void main(String[] args) {
 		
 

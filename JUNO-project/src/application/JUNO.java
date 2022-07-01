@@ -27,7 +27,6 @@ public class JUNO extends Application {
 	}
 	
 	public static void main(String[] args) throws IOException {		
-		Game g= new Game();
 		launch(args);
 	}
 }

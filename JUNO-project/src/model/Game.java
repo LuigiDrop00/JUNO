@@ -1,47 +1,85 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Observable;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-/** a class that rapresents a game and its features */
+/** a class that represents a game and its features */
+@SuppressWarnings("deprecation")
 public class Game extends Observable {
+	
+	private class Ai extends Entity{
 
-    private Player p1; 
-    private Ai p2;
-    private Ai p3;
-    private Ai p4;
+		public Ai(String nickname) {
+			super(nickname);
+		}
+		@Override
+		public void play(Card discard) {
 
-    private Deck deck = Deck.getInstance();
-    //private List<Card> pila;
-    private Card discarded;
-    private int toDraw; 
+			//restituisce una lista di carte giocabili secondo le regole
+			ArrayList<Card> playable=(ArrayList<Card>) this.HAND.stream().filter((x)->x.getColor().equals(discard.getColor())||
+					x.getColor()==Color.BLACK||x.VALUE.equals(discard.VALUE)).collect(Collectors.toList());
+				
+			if (playable.isEmpty()) {
+					this.drawFrom();
+					setChanged();
+					notifyObservers("Draw");
+				Card drawn= this.HAND.get(HAND.size()-1);
+				if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
+					cardEffect(drawn);
+		    		pile.addFirst(drawn);
+		    		HAND.remove(drawn);
+					setChanged();
+					notifyObservers("Play");
+				}
+				else {
+					setChanged();
+					notifyObservers("Pass");
+				}
+			}
+			else {
+				cardEffect(playable.get(0));
+	    		pile.addFirst(playable.get(0));
+	    		HAND.remove(playable);
+				setChanged();
+				notifyObservers("Play");
+			}
+		}
+	}
+
+    private Player p1;
+    final public Entity[] players;
+
+    final static private Deck deck = Deck.getInstance();
+    final static public LinkedList<Card> pile= new LinkedList<Card>();
+    private boolean uno=false;
 
     /** sets whether the order of players turns is to be decided in a clockwise direction or not.
-     *The value is 1 for Clockwise, -1 for Counterclockwise */
-    private int isClockwise = 1;
+     *The value is true for Clockwise, false for Counterclockwise */
+    private boolean isClockwise = true;
     private int turn = 0;
-    private int getTurn(){
-        return ++turn % 4;
+    public int getTurn() {
+    	return turn % 4;
+    }
+    private int increaseTurn(){
+        if (isClockwise)	return ++turn % 4;
+        else	return --turn % 4;
     }
     /** in order to be played, a game needs a deck,
      *  4 Players a pile of folded card the order of pl
      *  */
-    public Game()   {
-        //imposta il gicatore umano
-        // this.p1 = player;
-
-      /*  p1 = Player.load("p1", "123");
-        p2 = Player.load("p2", "123");
-        p3 = Player.load("p3", "123");
-        p4 = Player.load("p4", "123");*/
-    	
+    public Game()   {   	
     	//mischia il mazzo
         deck.shuffleDeck();
-        try {
-			discarded=deck.draw();
-		} catch (EmptyDeckException e) {
-			e.printStackTrace();
-		}
+        //TODO cardEffect?
+        p1=LoginState.getLoggedPlayer();
+		pile.addFirst(deck.draw());
+		players= new Entity[]{p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
+		for (Entity e:players) {
+			e.drawFrom(7);
+			}       
         /*
            1. Partita generata, giocatori caricati(addObserver),
              mazzo/scarti creato, giroOrario(ordine dei turni con id)
@@ -51,38 +89,116 @@ public class Game extends Observable {
             3. gameOver() assegnazione exp, partite vinte/perse/giocate ritorna a menu
                 principale
         */
-
     }
     
-    public void aiTurn() throws EmptyDeckException {
-    	Card playedCard=new Card(null, null);
-    	while (getTurn()!=0) {
-    		
-    		switch(getTurn()) {
-    		case 1:	playedCard=p2.play(discarded, deck); break;
-    		case 2:	playedCard=p3.play(discarded, deck); break;
-    		case 3:	playedCard=p4.play(discarded, deck); break;
+    public void aiTurn() {
+    	Card discarded=pile.get(0);
+    	while (increaseTurn()!=0) {
+    		Ai ai=(Ai) players[turn];
+    		ai.play(discarded);
+    		if (ai.HAND.size()==1) {
+				setChanged();
+				notifyObservers("Uno");
     		}
-    		
-    		cardEffect(playedCard);
-    		discarded=playedCard;
+    		if (ai.HAND.size()==0) {
+    			gameOver();
+				setChanged();
+				notifyObservers("Loss");
+				break;
+    		}
+    		discarded=pile.get(0);
     	}
     }
     
     private void cardEffect(Card playedCard) {
 		switch(playedCard.VALUE) {
-		case REVERSE:	isClockwise*=-1; break;
-		case SKIP:	turn+=isClockwise; break;
-		case DRAW2:	toDraw+=2;	turn+=isClockwise; break;
-		case DRAW4:	toDraw+=4;	turn+=isClockwise;     //TODO aggiungere argomento toDraw ad Entity()
-			playedCard.setColor(Color.values() [(int) (5*Math.random())]); break;
-		case CHANGE:	playedCard.setColor(Color.values() [(int) (5*Math.random())]); break;
-		}
+		case REVERSE:	isClockwise= !isClockwise; break;
+		case SKIP:	increaseTurn(); break;
+		case DRAW2:	players[increaseTurn()].drawFrom(2); break;
+		case DRAW4:	players[increaseTurn()].drawFrom(4);     
+			changeColor(playedCard); break;
+		case CHANGE:	changeColor(playedCard); break;
 		
+		}		
 	}
-	public void playerTurn() {
-    	
+    
+    private void changeColor(Card playedCard) {
+    	if (turn==0) {
+			setChanged();
+			notifyObservers("ChangeColor"); //TODO far scegliere il colore al giocatore nella view
+    	}
+    	else playedCard.setColor(Color.values() [(int) (5*Math.random())]); //TODO notify?
     }
+    
+    //TODO far chiamare questo metodo quando il giocatore preme il pulsante passaTurno o dopo che gioca una carta
+	public void playerEndTurn() {
+		increaseTurn();
+    	aiTurn();
+    }
+	
+	public void playerDraw() {
+			p1.drawFrom();
+			setChanged();
+			notifyObservers("Draw");
+	}
+	
+	public void playerPlay(Card discard) {
+		Card drawn= pile.get(0);
+		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
+			if (p1.HAND.size()==2 && uno==false) {
+				p1.drawFrom(2);
+				setChanged();
+				notifyObservers("NoUno");
+			}
+			cardEffect(discard);
+			p1.HAND.remove(discard);
+			pile.addFirst(discard);
+			setChanged();
+			notifyObservers("Play");
+    		if (p1.HAND.size()==0) {
+    			gameOver();
+				setChanged();
+				notifyObservers("Loss");
+    		}	
+    		else	playerEndTurn();
+		}	
+		else {
+			setChanged();
+			notifyObservers("InvalidPlay");
+		}	
+	}
+	
+	
+	public void pressUno(Card discard) {
+		if (p1.HAND.size()==2 && uno==false) {
+			uno=true;
+			playerPlay(discard);         
+			setChanged();
+			notifyObservers("Uno");
+			uno=false;
+		}
+	}
+	
+	public void gameOver() {  //TODO capire da dove chiamarlo
+		deck.refill(pile);	
+		if (p1.HAND.size()==0) {
+			for (int i=1; i<4; i++) p1.expUp(players[i].HAND.stream().map(new Function<Card,Integer>(){
+				@Override
+				public Integer apply(Card t) {
+					switch(t.VALUE) {
+					case DRAW2: case SKIP: case REVERSE: return 20;
+					case CHANGE: case DRAW4: return 50;
+					default:	return t.VALUE.toInt();	
+					}
+				} 	
+			}).reduce((x,y)->x+y).get());
+			p1.victoriesUp();
+		}
+		else {
+			p1.expUp(20);
+			p1.lossesUp();
+		}
+	}
 
 
 }
