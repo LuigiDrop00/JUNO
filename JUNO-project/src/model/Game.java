@@ -137,10 +137,10 @@ public class Game extends Observable {
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
 		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
-			if (p1.HAND.size()==2 && uno==false) {
-				playerDraw(p1,2);
+			if (p1.HAND.size()==2 && uno==false) {				
 				setChanged();
 				notifyObservers("NoUno");
+				playerDraw(p1,2);
 			}
 			cardEffect(discard);
 			p1.HAND.remove(discard);

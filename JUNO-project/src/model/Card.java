@@ -25,10 +25,11 @@ class Card {
 	 */
 	@Override
 	public String toString() {
+		String v=VALUE.toString();
 		String c=  color.toString();
+		if (v.equals("DRAW4")||v.equals("CHANGE")) 	return "Black"+"_"+v.charAt(0)+v.toLowerCase().subSequence(1, VALUE.toString().length()).toString()+".jpg";
 		if (VALUE.toInt()<10) return c.charAt(0)+c.toLowerCase().subSequence(1, color.toString().length()).toString()+"_"+VALUE.toInt()+".jpg";
 		else {
-			String v=VALUE.toString();
 			return c.charAt(0)+c.toLowerCase().subSequence(1, color.toString().length()).toString()+"_"+v.charAt(0)+v.toLowerCase().subSequence(1, VALUE.toString().length()).toString()+".jpg";
 		}
 	}
