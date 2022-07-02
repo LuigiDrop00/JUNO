@@ -51,6 +51,13 @@ public class Game extends Observable {
 
     private Player p1;
     final public Entity[] players;
+    private GameMode mode;
+    
+    public void setGameMode(String mode) {
+    	/*mode= switch(mode) {
+    	case "classic":  GameMode::toString;
+    	};*/
+    }
 
     final static private Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();

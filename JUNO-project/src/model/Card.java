@@ -45,4 +45,7 @@ class Card {
 		return new Card(Color.valueOf(args[0].toUpperCase()), value);
 	}
 	
+/*	public static void main(String[] args) {
+		System.out.print(new Card(Color.BLUE,Value.DRAW2));
+	}   */
 }

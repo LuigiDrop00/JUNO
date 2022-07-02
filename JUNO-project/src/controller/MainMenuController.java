@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.File;
-import javafx.scene.media.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,8 +21,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoginState;
@@ -61,8 +57,6 @@ public class MainMenuController {
 	}
 
 	public void switchToStartGame(ActionEvent event) throws IOException {
-		MediaPlayer m= new MediaPlayer(new Media(new File("src\\audioFiles\\uno.wav").toURI().toString()));
-		m.autoPlayProperty();
 		root = FXMLLoader.load(getClass().getResource("/views/PreGameSettings.fxml"));
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
