@@ -23,9 +23,7 @@ public class Game extends Observable {
 					x.getColor()==Color.BLACK||x.VALUE.equals(discard.VALUE)).collect(Collectors.toList());
 				
 			if (playable.isEmpty()) {
-					this.drawFrom();
-					setChanged();
-					notifyObservers("Draw");
+				playerDraw(this,4);
 				Card drawn= this.HAND.get(HAND.size()-1);
 				if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 					cardEffect(drawn);
@@ -50,13 +48,14 @@ public class Game extends Observable {
 	}
 
     private Player p1;
-    final public Entity[] players;
-    private GameMode mode;
-    
+    static public Entity[] players;
+    private GameOverConditions gameOverConditions;
     public void setGameMode(String mode) {
-    	/*mode= switch(mode) {
-    	case "classic":  GameMode::toString;
-    	};*/
+    	switch(mode) {
+    	case "classic": gameOverConditions = new GameOverConditionsClassic(); break;
+    	case "teams": break;
+    	case "caos": break;
+    	}
     }
 
     final static private Deck deck = Deck.getInstance();
@@ -118,7 +117,8 @@ public class Game extends Observable {
     	}
     }
     
-    private void cardEffect(Card playedCard) {
+    @SuppressWarnings("incomplete-switch")
+	private void cardEffect(Card playedCard) {
 		switch(playedCard.VALUE) {
 		case REVERSE:	isClockwise= !isClockwise; break;
 		case SKIP:	increaseTurn(); break;
@@ -183,7 +183,7 @@ public class Game extends Observable {
 		}
 	}
 	
-	public void gameOver() {  //TODO capire da dove chiamarlo
+	public void gameOver() { 
 		deck.refill(pile);	
 		if (p1.HAND.size()==0) {
 			for (int i=1; i<4; i++) p1.expUp(players[i].HAND.stream().map(new Function<Card,Integer>(){
