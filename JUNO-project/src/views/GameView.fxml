@@ -1,76 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.TilePane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" layoutX="362.0" layoutY="250.0" rotate="166.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-      <Text layoutX="729.0" layoutY="194.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
-      <Text layoutX="142.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
-      <Text layoutX="300.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
-      <Text layoutX="580.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
+      <ImageView fx:id="scarti" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" x="442.0" y="234.0">
+         <image>
+            <Image url="@../cardsImages/Blue_5.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="714.0" layoutY="215.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
+      <Text layoutX="137.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
+      <Text layoutX="280.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
+      <Text layoutX="559.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
       <Button fx:id="exitButton" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#exit" text="ESCI" />
-      <TilePane layoutX="218.0" layoutY="485.0" prefHeight="82.0" prefWidth="451.0">
+      <TilePane fx:id="mano0" alignment="CENTER" layoutX="62.0" layoutY="459.0" prefHeight="108.0" prefWidth="786.0" style="-fx-background-color: pink;">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Black_Change.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Red_8.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Green_0.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Red_8.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Blue_5.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Black_Draw4.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/Yellow_0.jpg" />
+               </image>
+            </ImageView>
          </children>
       </TilePane>
-      <TilePane layoutX="599.0" layoutY="259.0" prefHeight="82.0" prefWidth="451.0" rotate="90.0" scaleX="0.5">
+      <TilePane fx:id="mano3" alignment="CENTER" layoutX="483.0" layoutY="250.0" prefHeight="82.0" prefWidth="699.0" rotate="90.0" scaleX="0.5">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0">
-               <TilePane.margin>
-                  <Insets />
-               </TilePane.margin>
-            </Rectangle>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
          </children>
       </TilePane>
-      <TilePane layoutX="225.0" layoutY="30.0" prefHeight="82.0" prefWidth="451.0" scaleX="0.7">
+      <TilePane fx:id="mano2" layoutX="216.0" layoutY="37.0" prefHeight="82.0" prefWidth="468.0" scaleX="0.7">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
          </children>
       </TilePane>
-      <TilePane layoutX="-146.0" layoutY="274.0" prefHeight="82.0" prefWidth="451.0" rotate="90.0" scaleX="0.7">
+      <TilePane fx:id="mano1" layoutX="-163.0" layoutY="241.0" prefHeight="82.0" prefWidth="468.0" rotate="90.0" scaleX="0.5">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../cardsImages/UNO.jpg" />
+               </image>
+            </ImageView>
          </children>
       </TilePane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="82.0" layoutX="388.0" layoutY="259.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+      <ImageView fx:id="mazzo" fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" x="340.0" y="234.0">
+         <image>
+            <Image url="@../cardsImages/UNO.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="scarti1" fitHeight="80.0" fitWidth="60.0" layoutX="450.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true" rotate="-143.3">
+         <image>
+            <Image url="@../cardsImages/Blue_5.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="911.0" layoutY="260.0" onMouseClicked="#onClick" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../cardsImages/UNO.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

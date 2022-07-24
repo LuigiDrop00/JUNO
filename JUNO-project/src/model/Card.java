@@ -3,7 +3,7 @@ package model;
 import java.nio.file.FileSystems;
 import java.util.regex.Pattern;
 
-class Card {
+public class Card {
 
 	Card(Color color, Value VALUE ) {
 		this.color = color;

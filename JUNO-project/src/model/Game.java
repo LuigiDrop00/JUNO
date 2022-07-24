@@ -59,7 +59,7 @@ public class Game extends Observable {
     	};*/
     }
 
-    final static private Deck deck = Deck.getInstance();
+    final static public Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();
     private boolean uno=false;
 
