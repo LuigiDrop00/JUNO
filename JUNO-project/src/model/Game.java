@@ -52,7 +52,7 @@ public class Game extends Observable {
     private GameOverConditions gameOverConditions;
     public void setGameMode(String mode) {
     	switch(mode) {
-    	case "classic": gameOverConditions = new GameOverConditionsClassic(); break;
+    	case "classic": gameOverConditions = new GameOverConditionsClassic() {}; break;
     	case "teams": break;
     	case "caos": break;
     	}
@@ -107,8 +107,8 @@ public class Game extends Observable {
 				setChanged();
 				notifyObservers("Uno");
     		}
-    		if (ai.HAND.size()==0) {
-    			gameOver();
+    		if (ai.HAND.size()==0) {  //TODO
+    			loss();
 				setChanged();
 				notifyObservers("Loss");
 				break;
@@ -154,8 +154,8 @@ public class Game extends Observable {
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
-    		if (p1.HAND.size()==0) {
-    			gameOver();
+    		if (gameOverConditions.conditions()=="Win") {
+    			win();
 				setChanged();
 				notifyObservers("Win");
     		}	
@@ -183,9 +183,8 @@ public class Game extends Observable {
 		}
 	}
 	
-	public void gameOver() { 
+	private void win() { 
 		deck.refill(pile);	
-		if (p1.HAND.size()==0) {
 			for (int i=1; i<4; i++) p1.expUp(players[i].HAND.stream().map(new Function<Card,Integer>(){
 				@Override
 				public Integer apply(Card t) {
@@ -196,13 +195,12 @@ public class Game extends Observable {
 					}
 				} 	
 			}).reduce((x,y)->x+y).get());
-			p1.victoriesUp();
-		}
-		else {
+			p1.victoriesUp(); }
+	
+	private void loss() {
+		deck.refill(pile);	
 			p1.expUp(20);
 			p1.lossesUp();
-		}
 	}
-
 
 }
