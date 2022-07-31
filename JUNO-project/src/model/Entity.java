@@ -40,7 +40,7 @@ public abstract class Entity {
 		return Paths.get("src"+sep+"savedProfiles"+sep+avatar+".jpg").toAbsolutePath().toString();
 	}*/
 	
-	public void drawFrom() {
+	void drawFrom() {
 		HAND.add(Deck.getInstance().draw());
 	}
 	

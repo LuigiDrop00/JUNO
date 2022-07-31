@@ -52,18 +52,10 @@ public class Game extends Observable {
 
     private Player p1;
     final public Entity[] players;
-    private GameMode mode;
-    
-    public void setGameMode(String mode) {
-    	/*mode= switch(mode) {
-    	case "classic":  GameMode::toString;
-    	};*/
-    }
-
     final static public Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();
     private boolean uno=false;
-
+    boolean hasPlayerNotDrawn=true;
     /** sets whether the order of players turns is to be decided in a clockwise direction or not.
      *The value is true for Clockwise, false for Counterclockwise */
     private boolean isClockwise = true;
@@ -80,10 +72,11 @@ public class Game extends Observable {
     	if (turn-1 <= -1) return turn = 3;
         else return --turn;
     }
-    private int changeTurn() {
+    private int changeTurn() {	
     	if(isClockwise) return increaseTurn();
     	else return previousTurn();
     }
+    
     /** in order to be played, a game needs a deck,
      *  4 Players a pile of folded card the order of pl
      *  */
@@ -148,10 +141,16 @@ public class Game extends Observable {
     }
 	
 	public void playerDraw(Entity e, int n) {
-		for (int i=0; i<n; i++) {
-			e.drawFrom();
+		if (hasPlayerNotDrawn) {
+			e.drawFrom(n);
 			setChanged();
 			notifyObservers("Draw");}
+		hasPlayerNotDrawn=false;
+	}
+	
+	public void pass() {
+		hasPlayerNotDrawn=true;
+		aiTurn();
 	}
 	
 	public void playerPlay(Card discard) {
@@ -172,7 +171,7 @@ public class Game extends Observable {
 				setChanged();
 				notifyObservers("Win");
     		}	
-    		else	aiTurn();
+    		else	pass();
     		uno=false;
 		}	
 		else {

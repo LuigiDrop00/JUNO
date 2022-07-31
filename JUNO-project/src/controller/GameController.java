@@ -169,7 +169,7 @@ public class GameController implements Observer{
 			img.setFitHeight(80);
 			img.setImage(nuovaImg.getImage());
 
-			switch (turno % 4) {
+			switch (giocatore) {
 				case 0: mano0.getChildren().addAll(img); break;
 				case 1: mano1.getChildren().addAll(img); break;
 				case 2: mano2.getChildren().addAll(img); break;
