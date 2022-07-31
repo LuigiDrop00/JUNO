@@ -55,6 +55,8 @@ public class Game extends Observable {
     final static public Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();
     private boolean uno=false;
+    /**
+     * Checks if player has not drawn a card this turn */
     boolean hasPlayerNotDrawn=true;
     /** sets whether the order of players turns is to be decided in a clockwise direction or not.
      *The value is true for Clockwise, false for Counterclockwise */
@@ -142,9 +144,11 @@ public class Game extends Observable {
 	
 	public void playerDraw(Entity e, int n) {
 		if (hasPlayerNotDrawn) {
-			e.drawFrom(n);
-			setChanged();
-			notifyObservers("Draw");}
+			for (int i=0; i<n; i++) {
+				e.drawFrom();
+				setChanged();
+				notifyObservers("Draw");}
+		}
 		hasPlayerNotDrawn=false;
 	}
 	
