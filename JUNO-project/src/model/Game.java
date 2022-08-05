@@ -75,6 +75,7 @@ public class Game extends Observable {
         else return --turn;
     }
     private int changeTurn() {	
+    	hasPlayerNotDrawn = true;
     	if(isClockwise) return increaseTurn();
     	else return previousTurn();
     }

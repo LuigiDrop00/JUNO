@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -58,6 +59,8 @@ public class GameController implements Observer{
 	@FXML
 	private ImageView mazzo;
 	
+	private ImageView lastPlayedCard;
+	
 	public void animateDiscard(ImageView img, int giocatore) throws FileNotFoundException {
 		//Point2D xyCarta = img.localToScene(img.getLayoutBounds().getMinX(), img.getLayoutBounds().getMinY());
 		Point2D xyScarti = scarti.localToScene(scarti.getLayoutBounds().getMinX(), scarti.getLayoutBounds().getMinY());
@@ -76,8 +79,8 @@ public class GameController implements Observer{
 			scenePane.getChildren().add(nuovaImg);
 			coordXFinali = xyScarti.getX() - 420 + 60/2;
 			coordYFinali = xyScarti.getY() - 610 + 80/2;
-			img.toFront();
-			mano0.getChildren().remove(img);
+			System.out.println(lastPlayedCard.toString());
+			mano0.getChildren().remove(lastPlayedCard);
 		break;
 		case 1:
 			nuovaImg.setLayoutX(-54);
@@ -85,7 +88,7 @@ public class GameController implements Observer{
 			scenePane.getChildren().add(nuovaImg);
 			coordXFinali = xyScarti.getX() + 54 + 60/2;
 			coordYFinali = xyScarti.getY() - 242 + 80/2;
-			mano1.getChildren().remove(img);
+			mano1.getChildren().remove(0);
 			break;
 		case 2:
 			nuovaImg.setLayoutX(442);
@@ -93,7 +96,7 @@ public class GameController implements Observer{
 			scenePane.getChildren().add(nuovaImg);
 			coordXFinali = xyScarti.getX() - 442 + 60/2;
 			coordYFinali = xyScarti.getY() + 80 + 60/2;
-			mano2.getChildren().remove(img);
+			mano2.getChildren().remove(0);
 			break;
 		case 3:
 			nuovaImg.setLayoutX(900);
@@ -101,7 +104,7 @@ public class GameController implements Observer{
 			scenePane.getChildren().add(nuovaImg);
 			coordXFinali = xyScarti.getX() - nuovaImg.getLayoutX() + 60/2;
 			coordYFinali = xyScarti.getY() - nuovaImg.getLayoutY() + 60/2;
-			mano3.getChildren().remove(img);
+			mano3.getChildren().remove(0);
 			break;
 		default:
 			break;	
@@ -117,9 +120,7 @@ public class GameController implements Observer{
 		ImageView nuovaImg = new ImageView();
 		nuovaImg.setFitWidth(60);
 		nuovaImg.setFitHeight(80);
-		nuovaImg.setOnMouseClicked(event -> {
-			try { onDiscard(event); } catch (FileNotFoundException e) {}
-		});
+	
 		Point2D xyPilaMazzo = mazzo.localToScene(mazzo.getLayoutBounds().getMinX(), mazzo.getLayoutBounds().getMinY());
 		nuovaImg.setLayoutX(xyPilaMazzo.getX());
 		nuovaImg.setLayoutY(xyPilaMazzo.getY());
@@ -127,13 +128,14 @@ public class GameController implements Observer{
 		
 		double coordXFinali = 0;
 		double coordYFinali = 0;
+		String imgPath = "src/cardsImages/"+players[0].HAND.get(players[0].HAND.size()-1);
 		
 		switch (giocatore) {
 		case 0: 
 			coordXFinali = 80;
 			coordYFinali = 500;
 			//nuovaImg.setImage(new Image(new FileInputStream("src/cardsImages/UNO.jpg")));
-			nuovaImg.setImage(new Image(new FileInputStream("src/cardsImages/"+Game.pile.get(0).toString())));
+			nuovaImg.setImage(new Image(new FileInputStream(imgPath)));
 		break;
 		case 1:
 			coordXFinali = -385;
@@ -164,25 +166,35 @@ public class GameController implements Observer{
 		
 		PathTransition transition = new PathTransition(Duration.millis(1000), path, nuovaImg);
 		transition.setOnFinished(event -> {
-			ImageView img = new ImageView();
-			img.setFitWidth(60);
-			img.setFitHeight(80);
-			img.setImage(nuovaImg.getImage());
-
+			ImageView img1 = new ImageView();
+			img1.setFitWidth(60);
+			img1.setFitHeight(80);
+			img1.setImage(nuovaImg.getImage());
+			img1.addEventFilter(MouseEvent.MOUSE_CLICKED, event1 -> {
+				try {
+					onDiscard(imgPath, event1);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			});
+//			img1.setOnMouseClicked(mouseEvent -> {
+//				try { onDiscard(mouseEvent); } catch (FileNotFoundException e) { e.printStackTrace();}
+//			});
 			switch (giocatore) {
-				case 0: mano0.getChildren().addAll(img); break;
-				case 1: mano1.getChildren().addAll(img); break;
-				case 2: mano2.getChildren().addAll(img); break;
-				case 3: mano3.getChildren().addAll(img); break;
+				case 0: mano0.getChildren().addAll(img1); break;
+				case 1: mano1.getChildren().addAll(img1); break;
+				case 2: mano2.getChildren().addAll(img1); break;
+				case 3: mano3.getChildren().addAll(img1); break;
 			}
 		});
 		transition.play();
 	}
 	
-	public void onDiscard(MouseEvent event) throws FileNotFoundException {
+	public void onDiscard(String path, MouseEvent event) throws FileNotFoundException {
+		System.out.println("che cazzo ne so: "+path);
+		lastPlayedCard = (ImageView) event.getTarget();
 		if (game.getTurn() == 0) {
-			ImageView img = (ImageView) event.getTarget();
-			game.playerPlay(Card.pathToCard(img.getImage().getUrl()));
+			game.playerPlay(Card.pathToCard(path));
 		}
 	}
 	public void onDraw(MouseEvent event) throws FileNotFoundException {
@@ -197,6 +209,24 @@ public class GameController implements Observer{
 	public void initialize() throws FileNotFoundException {
 		game=new Game();
 		players=game.players;
+		
+		for (Card card : players[0].HAND) {
+			System.out.println(card.toString());
+			ImageView img = new ImageView();
+			img.setFitWidth(60);
+			img.setFitHeight(80);
+			img.setImage(new Image(new FileInputStream("src/cardsImages/"+card.toString())));	
+			img.addEventFilter(MouseEvent.MOUSE_CLICKED, event1 -> {
+				try {
+					onDiscard("src/cardsImages/"+card.toString(), event1);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			});
+			mano0.getChildren().add(img);
+		}
+		scarti.setImage(new Image(new FileInputStream("src/cardsImages/"+Game.pile.get(0).toString())));
+		
 		game.addObserver(this);
 		game.aiTurn();
 	}
@@ -224,7 +254,7 @@ public class GameController implements Observer{
 		switch (action) {
 		case "Draw": try { animateDraw(game.getTurn());} catch (FileNotFoundException e) { e.printStackTrace();} break; //TODO play animazione e suono di pesca; e aggiorna le carte in mano
 		case "Play": try {
-				animateDiscard(new ImageView(new Image(new FileInputStream(game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {} break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
+				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();} break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
 		case "Pass": break; //TODO aggiorna il colore
 		case "Uno": break; //TODO play suono uno
 		case "NoUno": break; 

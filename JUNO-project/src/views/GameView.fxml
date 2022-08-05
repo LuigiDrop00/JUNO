@@ -24,45 +24,7 @@
       <Text layoutX="137.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
       <Text layoutX="280.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
       <Text layoutX="559.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
-      <TilePane fx:id="mano0" alignment="CENTER" layoutX="62.0" layoutY="459.0" prefHeight="108.0" prefWidth="786.0" style="-fx-background-color: pink;">
-         <children>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Green_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Red_8.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Blue_5.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Black_Draw4.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Yellow_0.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Red_8.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" onMouseClicked="#onDiscard" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/Black_Change.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </TilePane>
+      <TilePane fx:id="mano0" alignment="CENTER" layoutX="62.0" layoutY="459.0" prefHeight="108.0" prefWidth="786.0" style="-fx-background-color: pink;" />
       <TilePane fx:id="mano3" alignment="CENTER" layoutX="447.0" layoutY="193.0" prefHeight="82.0" prefWidth="797.0" rotate="90.0" scaleX="0.5">
          <children>
             <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
@@ -192,5 +154,25 @@
             <Button layoutX="-7.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="102.0" style="-fx-background-color: yellow;" text="UNO" />
          </children>
       </Pane>
+      <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="149.0" layoutY="373.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../cardsImages/Red_8.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="213.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../cardsImages/Yellow_0.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="269.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../cardsImages/Green_0.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="320.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../cardsImages/Blue_5.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
