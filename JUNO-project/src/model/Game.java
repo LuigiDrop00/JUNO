@@ -91,6 +91,9 @@ public class Game extends Observable {
 		pile.addFirst(deck.draw());
 		players= new Entity[]{p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
 		for (Entity e:players) {
+			//resetta le mani dei giocatori
+			e.HAND.removeAll(e.HAND);
+			//i giocatori pescano le carte iniziali
 			e.drawFrom(7);
 		}
         /*
