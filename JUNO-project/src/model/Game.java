@@ -53,7 +53,7 @@ public class Game extends Observable {
     public void setGameMode(String mode) {
     	switch(mode) {
     	case "classic": gameOverConditions = new GameOverConditionsClassic() {}; break;
-    	case "teams": break;
+    	case "teams": gameOverConditions = new GameOverConditionsTeam() {}; break;
     	case "caos": break;
     	}
     }
