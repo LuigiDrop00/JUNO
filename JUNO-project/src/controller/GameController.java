@@ -265,7 +265,11 @@ public class GameController implements Observer{
 		System.out.println("azione-eseguita: "+arg);
 		System.out.println("giocatore: "+ game.getTurn());
 		System.out.println(game.pile.get(0));
-		System.out.println("-----------");
-		
+		System.out.println("-----------");	
+	}
+	
+	@FXML
+	public void rosso(MouseEvent e) {
+		System.out.println(e.getTarget());
 	}
 }
