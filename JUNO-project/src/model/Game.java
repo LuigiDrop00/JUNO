@@ -144,6 +144,10 @@ public class Game extends Observable {
     
     private void changeColor(Card playedCard) {
     	if (getTurn()!=0) playedCard.setColor(Color.values() [(int) (5*Math.random())]); //TODO notify?
+    	else {
+    		setChanged();
+			notifyObservers("ChangeColor");
+    	}
     }
 	
 	public void playerDraw(Entity e, int n) {
@@ -157,30 +161,37 @@ public class Game extends Observable {
 	}
 	
 	public void pass() {
-		hasPlayerNotDrawn=true;
+	//	hasPlayerNotDrawn=true;
 		aiTurn();
 	}
 	
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
+		//TODO creare un metodo cartaGiocabile? per sostituire sta roba nell'if
 		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 			if (p1.HAND.size()==2 && uno==false) {				
 				setChanged();
 				notifyObservers("NoUno");
 				playerDraw(p1,2);
 			}
+			//scarta la carta
 			p1.HAND.remove(discard);
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
+			
+			//l'effetto della carta si attiva
 			cardEffect(discard);
     		if (p1.HAND.size()==0) {
     			gameOver();
 				setChanged();
 				notifyObservers("Win");
     		}	
-    		else	pass();
     		uno=false;
+    		
+    		//passa il turno?
+    	//	else	pass(); //if discard=cambia colore non lo chiamare
+    		
 		}	
 		else {
 			setChanged();
