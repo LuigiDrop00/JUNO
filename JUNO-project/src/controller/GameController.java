@@ -255,6 +255,7 @@ public class GameController implements Observer{
 		case "Draw": try { animateDraw(game.getTurn());} catch (FileNotFoundException e) { e.printStackTrace();} break; //TODO play animazione e suono di pesca; e aggiorna le carte in mano
 		case "Play": try {
 				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();} break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
+		case "ChangeColor": break; //TODO chiamare il metodo pop-up scegli colore
 		case "Pass": break; //TODO aggiorna il colore
 		case "Uno": break; //TODO play suono uno
 		case "NoUno": break; 
