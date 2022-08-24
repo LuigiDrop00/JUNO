@@ -54,7 +54,7 @@ public class Game extends Observable {
     	switch(mode) {
     	case "classic": gameOverConditions = new GameOverConditionsClassic() {}; break;
     	case "teams": gameOverConditions = new GameOverConditionsTeam() {}; break;
-    	case "caos": break;
+    	case "caos":  gameOverConditions = new GameOverConditionsChaos() {}; break;
     	}
     }
 
@@ -77,8 +77,8 @@ public class Game extends Observable {
      *  4 Players a pile of folded card the order of pl
      *  */
     public Game()   {   	
-    	//mischia il mazzo
-        deck.shuffleDeck();
+    	//trasferisce tutte le carte dalla pila al mazzo e mischia il mazzo
+		deck.refill(pile);	
         //TODO cardEffect?
         p1=LoginState.getLoggedPlayer();
 		pile.addFirst(deck.draw());
@@ -100,20 +100,15 @@ public class Game extends Observable {
   //TODO far chiamare questo metodo quando il giocatore preme il pulsante passaTurno o dopo che gioca una carta
     public void aiTurn() {
     	Card discarded=pile.get(0);
-    	while (increaseTurn()!=0) {
+    	while (getTurn()!=0) {
     		Ai ai=(Ai) players[getTurn()];
     		ai.play(discarded);
     		if (ai.HAND.size()==1) {
 				setChanged();
 				notifyObservers("Uno");
     		}
-    		if (ai.HAND.size()==0) {  //TODO
-    			loss();
-				setChanged();
-				notifyObservers("Loss");
-				break;
-    		}
     		discarded=pile.get(0);
+    		if(pass()) increaseTurn();
     	}
     }
     
@@ -141,6 +136,22 @@ public class Game extends Observable {
 			notifyObservers("Draw");}
 	}
 	
+	public boolean pass() {
+		if(gameOverConditions.conditions()=="Loss") {
+    			loss();
+				setChanged();
+				notifyObservers("Loss");
+				return false;
+    		}
+		else if(gameOverConditions.conditions()=="Win") {
+			win();
+			setChanged();
+			notifyObservers("Win");
+			return false;
+			}
+		else return true;
+		}
+	
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
 		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
@@ -149,18 +160,14 @@ public class Game extends Observable {
 				notifyObservers("NoUno");
 				playerDraw(p1,2);
 			}
-			cardEffect(discard);
+
 			p1.HAND.remove(discard);
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
-    		if (gameOverConditions.conditions()=="Win") {
-    			win();
-				setChanged();
-				notifyObservers("Win");
-    		}	
-    		else	aiTurn();
-    		uno=false;
+			cardEffect(discard);
+			uno=false;
+			if(pass()) aiTurn();	
 		}	
 		else {
 			setChanged();
@@ -183,8 +190,7 @@ public class Game extends Observable {
 		}
 	}
 	
-	private void win() { 
-		deck.refill(pile);	
+	private void win() { 	
 			for (int i=1; i<4; i++) p1.expUp(players[i].HAND.stream().map(new Function<Card,Integer>(){
 				@Override
 				public Integer apply(Card t) {
@@ -198,7 +204,6 @@ public class Game extends Observable {
 			p1.victoriesUp(); }
 	
 	private void loss() {
-		deck.refill(pile);	
 			p1.expUp(20);
 			p1.lossesUp();
 	}

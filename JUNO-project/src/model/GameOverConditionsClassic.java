@@ -3,9 +3,9 @@ package model;
 public interface GameOverConditionsClassic extends GameOverConditions {
 	@Override
 	default String conditions() {
-		String result;
+		String result=null;
 		if(Game.players[0].HAND.size()==0) result="Win";
-		else result="Loss";
+		else if (Game.players[1].HAND.size()==0 || Game.players[2].HAND.size()==0 || Game.players[3].HAND.size()==0) result="Loss";
 		return result;
 	}
 }
