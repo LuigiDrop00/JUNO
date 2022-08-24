@@ -3,7 +3,7 @@ package model;
 import java.nio.file.FileSystems;
 import java.util.regex.Pattern;
 
-class Card {
+public class Card {
 
 	Card(Color color, Value VALUE ) {
 		this.color = color;
@@ -34,8 +34,9 @@ class Card {
 		}
 	}
 	
-	static Card pathToCard(String s) {
-		String [] a=s.split(Pattern.quote(FileSystems.getDefault().getSeparator()));
+	public static Card pathToCard(String s) {
+		System.out.println("URL:"+s);
+		String [] a=s.split("/");
 		s=a[a.length-1];
 		String[] args=s.substring(0,s.length()-4).split("_");
 		int c=Character.digit(args[1].charAt(0), 10);

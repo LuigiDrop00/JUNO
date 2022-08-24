@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.function.Function;
@@ -26,11 +27,11 @@ public class Game extends Observable {
 				playerDraw(this,4);
 				Card drawn= this.HAND.get(HAND.size()-1);
 				if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
-					cardEffect(drawn);
 		    		pile.addFirst(drawn);
 		    		HAND.remove(drawn);
 					setChanged();
 					notifyObservers("Play");
+					cardEffect(drawn);
 				}
 				else {
 					setChanged();
@@ -38,11 +39,11 @@ public class Game extends Observable {
 				}
 			}
 			else {
-				cardEffect(playable.get(0));
 	    		pile.addFirst(playable.get(0));
 	    		HAND.remove(playable.get(0));
 				setChanged();
 				notifyObservers("Play");
+				cardEffect(playable.get(0));
 			}
 		}
 	}
@@ -61,43 +62,50 @@ public class Game extends Observable {
     final static private Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();
     private boolean uno=false;
-
+    /**
+     * Checks if player has not drawn a card this turn */
+    boolean hasPlayerNotDrawn=true;
     /** sets whether the order of players turns is to be decided in a clockwise direction or not.
      *The value is true for Clockwise, false for Counterclockwise */
     private boolean isClockwise = true;
-    private int turn = 0;
-    public int getTurn() {
-    	return turn % 4;
+    
+	int turn = 0;
+    public int getTurn() {	
+    	return turn;
     }
     private int increaseTurn(){
-        if (isClockwise)	return ++turn % 4;
-        else	return --turn % 4;
+    	if (turn+1 >= 4) return turn = 0;
+        else return ++turn;
     }
+    private int previousTurn() {
+    	if (turn-1 <= -1) return turn = 3;
+        else return --turn;
+    }
+    private int changeTurn() {	
+    	hasPlayerNotDrawn = true;
+    	if(isClockwise) return increaseTurn();
+    	else return previousTurn();
+    }
+    
     /** in order to be played, a game needs a deck,
      *  4 Players a pile of folded card the order of pl
      *  */
     public Game()   {   	
     	//trasferisce tutte le carte dalla pila al mazzo e mischia il mazzo
 		deck.refill(pile);	
-        //TODO cardEffect?
-        p1=LoginState.getLoggedPlayer();
-		pile.addFirst(deck.draw());
+        p1=LoginState.getLoggedPlayer();		
 		players= new Entity[]{p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
 		for (Entity e:players) {
+			//resetta le mani dei giocatori
+			e.HAND.removeAll(e.HAND);
+			//i giocatori pescano le carte iniziali
 			e.drawFrom(7);
-			}       
-        /*
-           1. Partita generata, giocatori caricati(addObserver),
-             mazzo/scarti creato, giroOrario(ordine dei turni con id)
-            2.ogni turno viene inviata una notifica dalla partita con id
-                eventi (pesca carte, cambiacolore, cambiagtiro, saltaTurno)
-                GIOCATORE CON DUE CARTE - UNO prima di scartare la seconda carta
-            3. gameOver() assegnazione exp, partite vinte/perse/giocate ritorna a menu
-                principale
-        */
+		}
+		Card first=deck.draw();
+		pile.addFirst(first);
+		if (first.VALUE!=Value.DRAW4) cardEffect(first);
     }
     
-  //TODO far chiamare questo metodo quando il giocatore preme il pulsante passaTurno o dopo che gioca una carta
     public void aiTurn() {
     	Card discarded=pile.get(0);
     	while (getTurn()!=0) {
@@ -112,28 +120,36 @@ public class Game extends Observable {
     	}
     }
     
-    @SuppressWarnings("incomplete-switch")
 	private void cardEffect(Card playedCard) {
 		switch(playedCard.VALUE) {
 		case REVERSE:	isClockwise= !isClockwise; break;
-		case SKIP:	increaseTurn(); break;
-		case DRAW2:	playerDraw(players[increaseTurn()],2); break;
-		case DRAW4:	playerDraw(players[increaseTurn()],4);     
+		case SKIP:	changeTurn(); break;
+		case DRAW2:	playerDraw(players[changeTurn()],2); break;
+		case DRAW4:	playerDraw(players[changeTurn()],4);     
 			changeColor(playedCard); break;
 		case CHANGE:	changeColor(playedCard); break;
-		
+		default:
+			System.out.println("CARTA NORMALE");
+			break;
 		}		
 	}
     
     private void changeColor(Card playedCard) {
-    	if (getTurn()!=0) playedCard.setColor(Color.values() [(int) (5*Math.random())]); //TODO notify?
+    	if (getTurn()!=0) playedCard.setColor(Color.values() [(int) (5*Math.random())]);
+    	else {
+    		setChanged();
+			notifyObservers("ChangeColor");
+    	}
     }
 	
 	public void playerDraw(Entity e, int n) {
-		for (int i=0; i<n; i++) {
-			e.drawFrom();
-			setChanged();
-			notifyObservers("Draw");}
+		if (hasPlayerNotDrawn) {
+			for (int i=0; i<n; i++) {
+				e.drawFrom();
+				setChanged();
+				notifyObservers("Draw");}
+		}
+		hasPlayerNotDrawn=false;
 	}
 	
 	public boolean pass() {
@@ -154,20 +170,23 @@ public class Game extends Observable {
 	
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
+		//TODO creare un metodo cartaGiocabile? per sostituire sta roba nell'if
 		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 			if (p1.HAND.size()==2 && uno==false) {				
 				setChanged();
 				notifyObservers("NoUno");
 				playerDraw(p1,2);
 			}
-
+			//scarta la carta
 			p1.HAND.remove(discard);
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
+			//l'effetto della carta si attiva
 			cardEffect(discard);
 			uno=false;
-			if(pass()) aiTurn();	
+			//passa il turno se la partita non è finita
+			if(pass()) aiTurn();	//if discard=cambia colore non lo chiamare
 		}	
 		else {
 			setChanged();
@@ -189,7 +208,7 @@ public class Game extends Observable {
 			notifyObservers("Uno");
 		}
 	}
-	
+
 	private void win() { 	
 			for (int i=1; i<4; i++) p1.expUp(players[i].HAND.stream().map(new Function<Card,Integer>(){
 				@Override
