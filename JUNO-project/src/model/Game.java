@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Observable;
-import java.util.function.Function;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 /** a class that represents a game and its features */
@@ -51,11 +51,12 @@ public class Game extends Observable {
     private Player p1;
     static public Entity[] players;
     private GameOverConditions gameOverConditions;
+   // private Supplier p= gameOverConditions::conditions;
     public void setGameMode(String mode) {
     	switch(mode) {
     	case "classic": gameOverConditions = new GameOverConditionsClassic() {}; break;
     	case "teams": gameOverConditions = new GameOverConditionsTeam() {}; break;
-    	case "caos":  gameOverConditions = new GameOverConditionsChaos() {}; break;
+    	case "caos":  gameOverConditions = new GameOverConditionsClassic() {}; break;
     	}
     }
 
@@ -116,7 +117,7 @@ public class Game extends Observable {
 				notifyObservers("Uno");
     		}
     		discarded=pile.get(0);
-    		if(pass()) increaseTurn();
+    		if(canPass()) increaseTurn();
     	}
     }
     
@@ -152,7 +153,7 @@ public class Game extends Observable {
 		hasPlayerNotDrawn=false;
 	}
 	
-	public boolean pass() {
+	private boolean canPass() {
 		if(gameOverConditions.conditions()=="Loss") {
     			loss();
 				setChanged();
@@ -170,7 +171,7 @@ public class Game extends Observable {
 	
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
-		//TODO creare un metodo cartaGiocabile? per sostituire sta roba nell'if
+		//TODO creare interfaccie cartaGiocabile? per sostituire sta roba nell'if
 		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 			if (p1.HAND.size()==2 && uno==false) {				
 				setChanged();
@@ -186,7 +187,7 @@ public class Game extends Observable {
 			cardEffect(discard);
 			uno=false;
 			//passa il turno se la partita non è finita
-			if(pass()) aiTurn();	//if discard=cambia colore non lo chiamare
+			if(canPass()) aiTurn();	//if discard=cambia colore non lo chiamare
 		}	
 		else {
 			setChanged();
