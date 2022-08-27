@@ -64,8 +64,11 @@ public class Game extends Observable {
     final static public LinkedList<Card> pile= new LinkedList<Card>();
     private boolean uno=false;
     /**
-     * Checks if player has not drawn a card this turn */
-    boolean hasPlayerNotDrawn=true;
+     * Checks if player has played a card this turn */
+    private boolean hasPlayerPlayed = false;
+    /**
+     * Checks if player has drawn a card this turn */
+    boolean hasPlayerDrawn=false;
     /** sets whether the order of players turns is to be decided in a clockwise direction or not.
      *The value is true for Clockwise, false for Counterclockwise */
     private boolean isClockwise = true;
@@ -83,7 +86,7 @@ public class Game extends Observable {
         else return --turn;
     }
     private int changeTurn() {	
-    	hasPlayerNotDrawn = true;
+    	hasPlayerDrawn = false;
     	if(isClockwise) return increaseTurn();
     	else return previousTurn();
     }
@@ -144,13 +147,13 @@ public class Game extends Observable {
     }
 	
 	public void playerDraw(Entity e, int n) {
-		if (hasPlayerNotDrawn) {
+		if (!hasPlayerDrawn) {
 			for (int i=0; i<n; i++) {
 				e.drawFrom();
 				setChanged();
 				notifyObservers("Draw");}
 		}
-		hasPlayerNotDrawn=false;
+		hasPlayerDrawn=true;
 	}
 	
 	private boolean canPass() {
@@ -168,6 +171,10 @@ public class Game extends Observable {
 			}
 		else return true;
 		}
+	
+	public void pass() {
+		if(canPass()) aiTurn();
+	}
 	
 	public void playerPlay(Card discard) {
 		Card drawn= pile.get(0);
@@ -187,7 +194,7 @@ public class Game extends Observable {
 			cardEffect(discard);
 			uno=false;
 			//passa il turno se la partita non è finita
-			if(canPass()) aiTurn();	//if discard=cambia colore non lo chiamare
+			//if(canPass()) aiTurn();	//if discard=cambia colore non lo chiamare
 		}	
 		else {
 			setChanged();
