@@ -10,21 +10,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
    <children>
-      <Pane fx:id="pannelloScegli" disable="true" layoutX="353.0" layoutY="187.0" prefHeight="254.0" prefWidth="216.0" style="-fx-background-color: lightGrey; -fx-border-color: black; -fx-border-width: 2; -fx-background-radius: 12; -fx-border-radius: 12;">
-         <children>
-            <Pane layoutX="21.0" layoutY="47.0" onMouseClicked="#clickGreen" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: green; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
-            <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli un colore" textAlignment="CENTER" wrappingWidth="187.6708984375">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Text>
-            <Pane layoutX="115.0" layoutY="47.0" onMouseClicked="#clickRed" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: red; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
-            <Pane layoutX="21.0" layoutY="149.0" onMouseClicked="#clickYellow" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: yellow; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
-            <Pane layoutX="115.0" layoutY="149.0" onMouseClicked="#clickBlue" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: blue; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
-         </children>
-      </Pane>
       <ImageView fitHeight="608.0" fitWidth="907.0" layoutX="-1.0" layoutY="-7.0" pickOnBounds="true">
          <image>
             <Image url="@../../../../gradient_multicolored_color_153151_3840x2160.jpg" />
@@ -45,7 +32,7 @@
       <Text layoutX="280.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
       <Text layoutX="559.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GIOCATORE2" />
       <TilePane fx:id="mano0" alignment="CENTER" layoutX="62.0" layoutY="459.0" prefHeight="108.0" prefWidth="786.0" />
-      <TilePane fx:id="mano3" alignment="CENTER" layoutX="447.0" layoutY="193.0" prefHeight="82.0" prefWidth="797.0" rotate="90.0" scaleX="0.5">
+      <TilePane fx:id="mano3" alignment="CENTER" layoutX="450.0" layoutY="216.0" prefHeight="82.0" prefWidth="797.0" rotate="90.0" scaleX="0.5">
          <children>
             <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -72,7 +59,7 @@
                   <Image url="@../cardsImages/UNO.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="551.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../cardsImages/UNO.jpg" />
                </image>
@@ -84,13 +71,8 @@
             </ImageView>
          </children>
       </TilePane>
-      <TilePane fx:id="mano2" alignment="CENTER" layoutX="93.0" layoutY="46.0" prefHeight="82.0" prefWidth="724.0" scaleX="0.7">
+      <TilePane fx:id="mano2" alignment="CENTER" layoutX="99.0" layoutY="43.0" prefHeight="82.0" prefWidth="724.0" scaleX="0.7">
          <children>
-            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../cardsImages/UNO.jpg" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../cardsImages/UNO.jpg" />
@@ -160,7 +142,7 @@
                   <Image url="@../cardsImages/UNO.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="80.0" fitWidth="60.0" layoutX="417.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../cardsImages/UNO.jpg" />
                </image>
@@ -211,6 +193,19 @@
             <Image url="@../cardsImages/Black_Draw4.jpg" />
          </image>
       </ImageView>
+      <Pane fx:id="pannelloScegli" disable="true" layoutX="353.0" layoutY="187.0" prefHeight="254.0" prefWidth="216.0" style="-fx-background-color: lightGrey; -fx-border-color: black; -fx-border-width: 2; -fx-background-radius: 12; -fx-border-radius: 12;">
+         <children>
+            <Pane layoutX="21.0" layoutY="47.0" onMouseClicked="#clickGreen" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: green; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
+            <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli un colore" textAlignment="CENTER" wrappingWidth="187.6708984375">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Pane layoutX="115.0" layoutY="47.0" onMouseClicked="#clickRed" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: red; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
+            <Pane layoutX="21.0" layoutY="149.0" onMouseClicked="#clickYellow" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: yellow; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
+            <Pane layoutX="115.0" layoutY="149.0" onMouseClicked="#clickBlue" prefHeight="91.0" prefWidth="81.0" style="-fx-background-color: blue; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20; -fx-border-width: 2;" />
+         </children>
+      </Pane>
       <Text layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATO" textAlignment="CENTER" wrappingWidth="899.9999931156635" />
    </children>
 </AnchorPane>

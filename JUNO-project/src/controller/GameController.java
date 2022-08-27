@@ -66,7 +66,7 @@ public class GameController implements Observer{
 	private Pane pannelloScegli;
 
 	@FXML
-	private void clickGreen() { onColorChoosen(Color.GREEN);}
+	private void clickGreen() { onColorChoosen(Color.GREEN); System.out.print("skfnsnfnslfsn");}
 	@FXML
 	private void clickYellow() { onColorChoosen(Color.YELLOW);}
 	@FXML

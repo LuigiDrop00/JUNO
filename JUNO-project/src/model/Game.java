@@ -205,10 +205,6 @@ public class Game extends Observable {
 			notifyObservers("Play");
 			//l'effetto della carta si attiva
 			cardEffect(discard);
-			if(canPass()) {
-				changeTurn();
-				aiTurn();			
-			}
 		}	
 		else {
 			setChanged();
