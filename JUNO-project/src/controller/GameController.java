@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -30,6 +31,7 @@ import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Card;
+import model.Color;
 import model.Entity;
 import model.Game;
 
@@ -58,8 +60,28 @@ public class GameController implements Observer{
 	private ImageView scarti;
 	@FXML
 	private ImageView mazzo;
-	
+	@FXML
 	private ImageView lastPlayedCard;
+	@FXML
+	private Pane pannelloScegli;
+
+	@FXML
+	private void clickGreen() { onColorChoosen(Color.GREEN);}
+	@FXML
+	private void clickYellow() { onColorChoosen(Color.YELLOW);}
+	@FXML
+	private void clickRed() { onColorChoosen(Color.RED);}
+	@FXML
+	private void clickBlue() { onColorChoosen(Color.BLUE);}
+	private void openChooseColor() {
+		pannelloScegli.toFront();
+	}
+	private void onColorChoosen(Color choosenColor) {
+		Game.pile.getFirst().setColor(choosenColor);
+		pannelloScegli.toBack();
+	}
+	
+	
 	
 	public void animateDiscard(ImageView img, int giocatore) throws FileNotFoundException {
 		//Point2D xyCarta = img.localToScene(img.getLayoutBounds().getMinX(), img.getLayoutBounds().getMinY());
@@ -189,7 +211,7 @@ public class GameController implements Observer{
 		});
 		transition.play();
 	}
-	
+
 	public void onDiscard(String path, MouseEvent event) throws FileNotFoundException {
 		System.out.println("che cazzo ne so: "+path);
 		lastPlayedCard = (ImageView) event.getTarget();
@@ -208,6 +230,7 @@ public class GameController implements Observer{
 	@FXML
 	public void initialize() throws FileNotFoundException {
 		game=new Game();
+		game.setGameMode("classic");
 		players=game.players;
 		
 		for (Card card : players[0].HAND) {
@@ -243,10 +266,12 @@ public class GameController implements Observer{
 			stage.show();
 		}
 	}
-	public void testTurno() {
-		System.out.println(game.getTurn());
+	@FXML
+	private void passaTurno() {
+		System.out.println("passaTUrno");
+		game.pass();
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		String action= (String) arg;
@@ -255,7 +280,7 @@ public class GameController implements Observer{
 		case "Draw": try { animateDraw(game.getTurn());} catch (FileNotFoundException e) { e.printStackTrace();} break; //TODO play animazione e suono di pesca; e aggiorna le carte in mano
 		case "Play": try {
 				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();} break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
-		case "ChangeColor": break; //TODO chiamare il metodo pop-up scegli colore
+		case "ChangeColor": openChooseColor(); break; //TODO chiamare il metodo pop-up scegli colore
 		case "Pass": break; //TODO aggiorna il colore
 		case "Uno": break; //TODO play suono uno
 		case "NoUno": break; 
