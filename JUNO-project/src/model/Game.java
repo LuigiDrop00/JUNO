@@ -24,7 +24,7 @@ public class Game extends Observable {
 					x.getColor()==Color.BLACK||x.VALUE.equals(discard.VALUE)).collect(Collectors.toList());
 				
 			if (playable.isEmpty()) {
-				playerDraw(this,4);
+				playerDraw(this,1);
 				Card drawn= this.HAND.get(HAND.size()-1);
 				if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 		    		pile.addFirst(drawn);
@@ -77,7 +77,8 @@ public class Game extends Observable {
      *The value is true for Clockwise, false for Counterclockwise */
     private boolean isClockwise = true;
     
-	int turn = 0;
+	private int turn = 0;
+	private int realTurn;
     public int getTurn() {	
     	return turn;
     }
@@ -94,8 +95,9 @@ public class Game extends Observable {
     	if(isClockwise) return increaseTurn();
     	else return decreaseTurn();
     }
-    void changeTurn() {
+    int changeTurn() {
     	turn=nextTurn();
+    	return turn;
     }
     
     /** in order to be played, a game needs a deck,
@@ -129,7 +131,7 @@ public class Game extends Observable {
 				notifyObservers("Uno");
     		}
     		discarded=pile.get(0);
-    		if(canPass()) increaseTurn();
+    		if(canPass()) changeTurn();
     	}
     }
     
@@ -137,9 +139,9 @@ public class Game extends Observable {
 		switch(playedCard.VALUE) {
 		case REVERSE:	isClockwise= !isClockwise; break;
 		case SKIP:	changeTurn(); break;
-		case DRAW2:	playerDraw(players[nextTurn()],2); changeTurn(); break;
-		case DRAW4:	playerDraw(players[nextTurn()],4);     
-			changeColor(playedCard); changeTurn(); break;
+		case DRAW2:	playerDraw(players[changeTurn()],2); break;
+		case DRAW4:	playerDraw(players[changeTurn()],4); isClockwise= !isClockwise; changeTurn(); isClockwise= !isClockwise;    
+			changeColor(playedCard); break;
 		case CHANGE:	changeColor(playedCard); break;
 		default:
 			System.out.println("CARTA NORMALE");
@@ -183,6 +185,7 @@ public class Game extends Observable {
 	
 	public void pass() {
 		if(canPass()) {
+			uno=false;
 			changeTurn();
 			aiTurn();			
 		}
@@ -202,9 +205,10 @@ public class Game extends Observable {
 			notifyObservers("Play");
 			//l'effetto della carta si attiva
 			cardEffect(discard);
-			uno=false;
-			//passa il turno se la partita non è finita
-			//if(canPass()) aiTurn();	//if discard=cambia colore non lo chiamare
+			if(canPass()) {
+				changeTurn();
+				aiTurn();			
+			}
 		}	
 		else {
 			setChanged();
