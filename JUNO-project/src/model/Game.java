@@ -24,7 +24,7 @@ public class Game extends Observable {
 					x.getColor()==Color.BLACK||x.VALUE.equals(discard.VALUE)).collect(Collectors.toList());
 				
 			if (playable.isEmpty()) {
-				playerDraw(this,4);
+				playerDraw(this,1);
 				Card drawn= this.HAND.get(HAND.size()-1);
 				if (drawn.getColor().equals(discard.getColor())|| drawn.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
 		    		pile.addFirst(drawn);
@@ -51,52 +51,63 @@ public class Game extends Observable {
     private Player p1;
     static public Entity[] players;
     private GameOverConditions gameOverConditions;
+    private ValidPlay validPlay;
    // private Supplier p= gameOverConditions::conditions;
     public void setGameMode(String mode) {
     	switch(mode) {
-    	case "classic": gameOverConditions = new GameOverConditionsClassic() {}; break;
-    	case "teams": gameOverConditions = new GameOverConditionsTeam() {}; break;
-    	case "caos":  gameOverConditions = new GameOverConditionsClassic() {}; break;
+    	case "classic": gameOverConditions = new GameOverConditionsClassic() {}; validPlay = new ValidPlayClassic() {}; break;
+    	case "teams": gameOverConditions = new GameOverConditionsTeam() {}; validPlay = new ValidPlayClassic() {}; break;
+    	case "chaos":  gameOverConditions = new GameOverConditionsClassic() {}; validPlay = new ValidPlayChaos() {};  break;
     	}
     }
 
     final static private Deck deck = Deck.getInstance();
     final static public LinkedList<Card> pile= new LinkedList<Card>();
-    private boolean uno=false;
+    /**
+     * Checks if player has pressed the uno button this turn */
+    private boolean uno = false;
+    int counter2;
     /**
      * Checks if player has played a card this turn */
-    private boolean hasPlayerPlayed = false;
+    boolean hasPlayerPlayed = false;
     /**
      * Checks if player has drawn a card this turn */
-    boolean hasPlayerDrawn=false;
+    boolean hasPlayerDrawn = false;
     /** sets whether the order of players turns is to be decided in a clockwise direction or not.
      *The value is true for Clockwise, false for Counterclockwise */
     private boolean isClockwise = true;
     
-	int turn = 0;
+	private int turn = 0;
+	private int realTurn;
     public int getTurn() {	
     	return turn;
     }
     private int increaseTurn(){
-    	if (turn+1 >= 4) return turn = 0;
-        else return ++turn;
+    	if (turn+1 >= 4) return 0;
+        else return turn + 1;
     }
-    private int previousTurn() {
-    	if (turn-1 <= -1) return turn = 3;
-        else return --turn;
+    private int decreaseTurn() {
+    	if (turn-1 <= -1) return 3;
+        else return turn-1;
     }
-    private int changeTurn() {	
+    int nextTurn() {	
     	hasPlayerDrawn = false;
     	if(isClockwise) return increaseTurn();
-    	else return previousTurn();
+    	else return decreaseTurn();
+    }
+    int changeTurn() {
+    	turn=nextTurn();
+    	return turn;
     }
     
     /** in order to be played, a game needs a deck,
      *  4 Players a pile of folded card the order of pl
      *  */
     public Game()   {   	
+    	setGameMode("classic");
     	//trasferisce tutte le carte dalla pila al mazzo e mischia il mazzo
 		deck.refill(pile);	
+		deck.shuffleDeck();
         p1=LoginState.getLoggedPlayer();		
 		players= new Entity[]{p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
 		for (Entity e:players) {
@@ -120,7 +131,7 @@ public class Game extends Observable {
 				notifyObservers("Uno");
     		}
     		discarded=pile.get(0);
-    		if(canPass()) increaseTurn();
+    		if(canPass()) changeTurn();
     	}
     }
     
@@ -129,7 +140,7 @@ public class Game extends Observable {
 		case REVERSE:	isClockwise= !isClockwise; break;
 		case SKIP:	changeTurn(); break;
 		case DRAW2:	playerDraw(players[changeTurn()],2); break;
-		case DRAW4:	playerDraw(players[changeTurn()],4);     
+		case DRAW4:	playerDraw(players[changeTurn()],4); isClockwise= !isClockwise; changeTurn(); isClockwise= !isClockwise;    
 			changeColor(playedCard); break;
 		case CHANGE:	changeColor(playedCard); break;
 		default:
@@ -173,13 +184,15 @@ public class Game extends Observable {
 		}
 	
 	public void pass() {
-		if(canPass()) aiTurn();
+		if(canPass()) {
+			uno=false;
+			changeTurn();
+			aiTurn();			
+		}
 	}
 	
 	public void playerPlay(Card discard) {
-		Card drawn= pile.get(0);
-		//TODO creare interfaccie cartaGiocabile? per sostituire sta roba nell'if
-		if (drawn.getColor().equals(discard.getColor())|| discard.getColor()==Color.BLACK||drawn.VALUE.equals(discard.VALUE)) {
+		if (validPlay.run(discard, hasPlayerPlayed)) {
 			if (p1.HAND.size()==2 && uno==false) {				
 				setChanged();
 				notifyObservers("NoUno");
@@ -192,9 +205,10 @@ public class Game extends Observable {
 			notifyObservers("Play");
 			//l'effetto della carta si attiva
 			cardEffect(discard);
-			uno=false;
-			//passa il turno se la partita non è finita
-			//if(canPass()) aiTurn();	//if discard=cambia colore non lo chiamare
+			if(canPass()) {
+				changeTurn();
+				aiTurn();			
+			}
 		}	
 		else {
 			setChanged();
