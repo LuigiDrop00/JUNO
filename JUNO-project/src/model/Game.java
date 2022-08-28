@@ -114,14 +114,12 @@ public class Game extends Observable {
 			e.drawFrom(7);
 		}
 		
-		Card first=new Card(Color.BLACK, Value.DRAW4);
+		Card first=deck.draw();
 		pile.addFirst(first);
-		System.out.println(first);
 		while (first.VALUE==Value.DRAW4) {
 			deck.refill(pile);
 			first=deck.draw();	
 			pile.addFirst(first);
-			System.out.println(first);
 			}
 		cardEffect(first);
     }
