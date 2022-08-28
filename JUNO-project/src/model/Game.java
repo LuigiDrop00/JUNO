@@ -91,7 +91,6 @@ public class Game extends Observable {
         else return turn-1;
     }
     int nextTurn() {	
-    	hasPlayerDrawn = false;
     	if(isClockwise) return increaseTurn();
     	else return decreaseTurn();
     }
@@ -186,6 +185,8 @@ public class Game extends Observable {
 	public void pass() {
 		if(canPass()) {
 			uno=false;
+			hasPlayerPlayed=false;
+	    	hasPlayerDrawn = false;
 			changeTurn();
 			aiTurn();			
 		}
@@ -204,6 +205,7 @@ public class Game extends Observable {
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
+			hasPlayerPlayed=true;
 			//l'effetto della carta si attiva
 			cardEffect(discard);
 		}	
@@ -221,7 +223,7 @@ public class Game extends Observable {
 	
 	
 	public void pressUno() {
-		if (p1.HAND.size()==2 && uno==false && getTurn()==0) {
+		if (p1.HAND.size()<=2 && uno==false && getTurn()==0) {
 			uno=true;       
 			setChanged();
 			notifyObservers("Uno");
