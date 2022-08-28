@@ -51,7 +51,11 @@ public class Deck {
 		//stampaMazzo();
 	}
 	Card draw(){
-		if (deck.isEmpty()) refill(Game.pile);
+		if (deck.isEmpty()) {
+			Card last= Game.pile.pop();
+			refill(Game.pile);
+			Game.pile.addFirst(last);
+		}
 		return deck.pop();
 	}
 	//usata solo da refill?
