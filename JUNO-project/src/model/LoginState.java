@@ -11,5 +11,4 @@ public final class LoginState {
     public static void setLoggedPlayer(Player loggedPlayer) {
         LoginState.loggedPlayer = loggedPlayer;
     }
-
 }
