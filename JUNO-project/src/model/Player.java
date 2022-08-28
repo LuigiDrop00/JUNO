@@ -28,7 +28,9 @@ public class Player extends Entity implements java.io.Serializable {
 	public int getLevel() {
 		return (int) (Math.log(exp/10 +2)/Math.log(2));
 	}
-	
+	public int getExp() {
+		return exp;
+	}
 	public void expUp(int up) {
 		exp+=up;
 	}

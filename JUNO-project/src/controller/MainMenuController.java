@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -31,12 +32,15 @@ public class MainMenuController {
 	@FXML
 	private Text nickname;
 	@FXML
-	private Text livello;
+	private Text livello, livelloSuccessivo, expMinima, expMassima;
 	@FXML
 	private ImageView profilePic;
 	@FXML
 	private Pane profileCard;
+	@FXML
+	private ProgressBar barraProgressi;
 
+	
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
@@ -46,9 +50,24 @@ public class MainMenuController {
 		Player p = LoginState.getLoggedPlayer();
 		System.out.println(p);
 		if (!(p == null)) {
+			int playerEXP = p.getExp();
+			int playerLevel = p.getLevel();
+			System.out.println("EXP: "+playerEXP);
+			System.out.println("LIV: "+playerLevel);
+			
+			int minEXP = (int) Math.pow(2, playerLevel-1)*10;
+			int maxEXP = (int) Math.pow(2, playerLevel)*10;
+			
+					
 			nickname.setText(p.getNickname());
 			livello.setText(String.valueOf(p.getLevel()));
+			livelloSuccessivo.setText("LIV."+(playerLevel+1));
+			if (p.getLevel() != 1 ) expMinima.setText(""+minEXP+"XP");
+			else expMinima.setText("0XP");
+			expMassima.setText(""+maxEXP+"XP");
 			profilePic.setImage(new Image(new FileInputStream(p.getAvatar())));
+			// p.getExp - expMinimo / (expMassimo - ExpMinimi)
+			barraProgressi.setProgress((playerEXP-minEXP) / (double) (maxEXP - minEXP));
 			profileCard.setOpacity(1);
 		} else {
 			profileCard.setOpacity(0);
@@ -63,15 +82,6 @@ public class MainMenuController {
 		stage.setScene(scene);
 		stage.show();
 	}
-
-	public void switchToSettings(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("/views/Settings.fxml"));
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-
 	public void switchToLogin(ActionEvent event) throws IOException {
 
 		root = FXMLLoader.load(getClass().getResource("/views/LoginOrRegister.fxml"));
