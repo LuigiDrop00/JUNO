@@ -63,13 +63,14 @@ public class Deck {
 		return deck.size() == 0;
 	}
 	
-	void refill(LinkedList<Card> pile) {
+	public void refill(List<Card> pile) {
 		while(!pile.isEmpty()) {
-			Card card=pile.pop();
-			if (card.VALUE==Value.CHANGE) card.setColor(Color.BLACK);
+			Card card=pile.get(0);
+			pile.remove(0);
+			if (card.VALUE==Value.CHANGE || card.VALUE==Value.DRAW4) card.setColor(Color.BLACK);
 			deck.add(card);
-			shuffleDeck();
 		}
+		shuffleDeck();
 	}
 	
 }

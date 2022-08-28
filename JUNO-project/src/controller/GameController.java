@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Card;
 import model.Color;
+import model.Deck;
 import model.Entity;
 import model.Game;
 
@@ -255,6 +256,10 @@ public class GameController implements Observer{
 	}
 	
 	public void exit(ActionEvent event) throws IOException{
+		for (Entity e:players) {
+			//resetta le mani dei giocatori
+			Deck.getInstance().refill(e.HAND);
+		}
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("sei sicuro di uscire dalla Partita?");
 		

@@ -107,15 +107,14 @@ public class Game extends Observable {
     	setGameMode("classic");
     	//trasferisce tutte le carte dalla pila al mazzo e mischia il mazzo
 		deck.refill(pile);	
-		deck.shuffleDeck();
         p1=LoginState.getLoggedPlayer();		
 		players= new Entity[]{p1, new Ai("AI1"),new Ai("AI2"),new Ai("AI3")};
-		for (Entity e:players) {
-			//resetta le mani dei giocatori
-			e.HAND.removeAll(e.HAND);
-			//i giocatori pescano le carte iniziali
+		
+		//i giocatori pescano le carte iniziali
+		for (Entity e:players) {			
 			e.drawFrom(7);
 		}
+		
 		Card first=deck.draw();
 		pile.addFirst(first);
 		if (first.VALUE!=Value.DRAW4) cardEffect(first);
@@ -132,6 +131,7 @@ public class Game extends Observable {
     		}
     		discarded=pile.get(0);
     		if(canPass()) changeTurn();
+    		else break;
     	}
     }
     
@@ -192,10 +192,11 @@ public class Game extends Observable {
 	}
 	
 	public void playerPlay(Card discard) {
-		if (validPlay.run(discard, hasPlayerPlayed)) {
-			if (p1.HAND.size()==2 && uno==false) {				
+		if (validPlay.run(discard, hasPlayerPlayed)) {  //TODO
+			if (p1.HAND.size()==2 && uno==false) {			
 				setChanged();
 				notifyObservers("NoUno");
+				hasPlayerDrawn=false;
 				playerDraw(p1,2);
 			}
 			//scarta la carta
@@ -238,11 +239,21 @@ public class Game extends Observable {
 					}
 				} 	
 			}).reduce((x,y)->x+y).get());
-			p1.victoriesUp(); }
+			p1.victoriesUp(); 
+			try {
+				p1.save();
+			} catch (SaveNotFoundException e) {
+				e.printStackTrace();
+			}}
 	
 	private void loss() {
 			p1.expUp(20);
 			p1.lossesUp();
+			try {
+				p1.save();
+			} catch (SaveNotFoundException e) {
+				e.printStackTrace();
+			}
 	}
 
 }
