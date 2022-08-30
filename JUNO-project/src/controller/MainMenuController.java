@@ -55,8 +55,8 @@ public class MainMenuController {
 			System.out.println("EXP: "+playerEXP);
 			System.out.println("LIV: "+playerLevel);
 			
-			int minEXP = (int) Math.pow(2, playerLevel-1)*10;
-			int maxEXP = (int) Math.pow(2, playerLevel)*10;
+			int minEXP = (int) Math.pow(2, playerLevel+1)*5 - 20;
+			int maxEXP = (int) Math.pow(2, playerLevel+2)*5 - 20;
 			
 					
 			nickname.setText(p.getNickname());
