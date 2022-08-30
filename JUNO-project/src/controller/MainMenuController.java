@@ -62,8 +62,7 @@ public class MainMenuController {
 			nickname.setText(p.getNickname());
 			livello.setText(String.valueOf(p.getLevel()));
 			livelloSuccessivo.setText("LIV."+(playerLevel+1));
-			if (p.getLevel() != 1 ) expMinima.setText(""+minEXP+"XP");
-			else expMinima.setText("0XP");
+			expMinima.setText(""+minEXP+"XP");
 			expMassima.setText(""+maxEXP+"XP");
 			profilePic.setImage(new Image(new FileInputStream(p.getAvatar())));
 			// p.getExp - expMinimo / (expMassimo - ExpMinimi)
