@@ -20,6 +20,17 @@ public class Card {
 		if (this.VALUE.equals(Value.CHANGE)||this.VALUE.equals(Value.DRAW4)) this.color = color;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (o==null) return false;
+		if (o==this) return true;
+		if (this.getClass().equals(o.getClass())) {
+			Card c= (Card) o;
+			return this.color==c.color && this.VALUE==c.VALUE;
+		}
+		return false;
+	}
+	
 	/**
 	 * ritorna il nome dell'immagine jpg corrispondente nella cartella cardImages
 	 */

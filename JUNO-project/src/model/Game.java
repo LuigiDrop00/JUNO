@@ -210,7 +210,7 @@ public class Game extends Observable {
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
-			hasPlayerPlayed=true;
+		//	hasPlayerPlayed=true;
 			//l'effetto della carta si attiva
 			cardEffect(discard);
 		}	
