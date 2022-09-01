@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
    <children>
       <AnchorPane fx:id="pannelloScegli" layoutX="330.0" layoutY="185.0" prefHeight="271.0" prefWidth="236.0" style="-fx-background-color: lightgray; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;">
          <children>
@@ -166,7 +166,7 @@
          <tooltip>
             <Tooltip text="Torna al menu pre-partita" />
          </tooltip></Button>
-      <Button layoutX="517.0" layoutY="239.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="68.0" style="-fx-background-color: yellow; -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: black;" text="UNO">
+      <Button layoutX="517.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#clickUno" prefHeight="70.0" prefWidth="68.0" style="-fx-background-color: yellow; -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: black;" text="UNO">
          <tooltip>
             <Tooltip text="test test" />
          </tooltip>

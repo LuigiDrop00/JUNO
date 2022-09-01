@@ -274,6 +274,12 @@ public class GameController implements Observer{
 		game.pass();
 	}
 	
+	@FXML
+	private void clickUno() {
+		System.out.println("ClickUno");
+		game.pressUno();;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		String action= (String) arg;

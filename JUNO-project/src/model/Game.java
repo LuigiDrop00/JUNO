@@ -77,7 +77,7 @@ public class Game extends Observable {
      *The value is true for Clockwise, false for Counterclockwise */
     private boolean isClockwise = true;
     
-	private int turn = 0;
+	private int turn = 1;
 	private int skip;
 	public int getSkip() {
 		return skip;
@@ -215,7 +215,7 @@ public class Game extends Observable {
 			notifyObservers("Play");
 			//l'effetto della carta si attiva
 			cardEffect(discard);
-			//	hasPlayerPlayed=true;
+			//hasPlayerPlayed=true;
 		}	
 		else {
 			setChanged();
@@ -223,15 +223,8 @@ public class Game extends Observable {
 		}	
 	}
 	
-	public void playerPlay(Card discard, Color color) {
-		playerPlay(discard);
-		discard.setColor(color);
-	}
-	
-	
-	
 	public void pressUno() {
-		if (p1.HAND.size()<=2 && uno==false && getTurn()==0) {
+		if (p1.HAND.size()==2 && uno==false && getTurn()==0) {
 			uno=true;       
 			setChanged();
 			notifyObservers("Uno");
