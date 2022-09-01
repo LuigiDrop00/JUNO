@@ -229,7 +229,7 @@ public class GameController implements Observer{
 	public void initialize() throws FileNotFoundException {
 		game=new Game();
 		game.setGameMode("classic");
-		players=game.players;
+		players=Game.players;
 		
 		for (Card card : players[0].HAND) {
 			System.out.println(card.toString());
@@ -279,12 +279,14 @@ public class GameController implements Observer{
 		String action= (String) arg;
 		Entity p= players[game.getTurn()];
 		switch (action) {
-		case "Draw": try { animateDraw(game.getTurn());} catch (FileNotFoundException e) { e.printStackTrace();} break; //TODO play animazione e suono di pesca; e aggiorna le carte in mano
+		case "Draw": try { animateDraw(game.getTurn()+game.getSkip());} catch (FileNotFoundException e) { e.printStackTrace();}
+						AudioManager.play("Draw.wav", false); break;
 		case "Play": try {
-				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();} break; //TODO play animazione e suono di carta giocata; e aggiorna le carte in mano e la pila
+				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+Game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();}
+						AudioManager.play("Play.wav", false); break; 
 		case "ChangeColor": openChooseColor(); break; //TODO chiamare il metodo pop-up scegli colore
-		case "Pass": break; //TODO aggiorna il colore
-		case "Uno": break; //TODO play suono uno
+		case "Pass":AudioManager.play("tuesday-glitch-soft-hip-hop-118327.mp3", true); break; //TODO aggiorna il colore 
+		case "Uno": AudioManager.play("uno.wav", false); break;
 		case "NoUno": break; 
 		case "IncorrectPlay": break;
 		case "Victory": break; //TODO play musica vittoriosa? e mostrare schermata risultati?

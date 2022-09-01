@@ -78,7 +78,10 @@ public class Game extends Observable {
     private boolean isClockwise = true;
     
 	private int turn = 0;
-	private int realTurn;
+	private int skip;
+	public int getSkip() {
+		return skip;
+	}
     public int getTurn() {	
     	return turn;
     }
@@ -90,12 +93,13 @@ public class Game extends Observable {
     	if (turn-1 <= -1) return 3;
         else return turn-1;
     }
-    int nextTurn() {	
+    private int nextTurn() {	
     	if(isClockwise) return increaseTurn();
     	else return decreaseTurn();
     }
-    int changeTurn() {
-    	turn=nextTurn();
+    private int changeTurn() {
+    	for (int i=0; i<=skip; i++) turn=nextTurn();
+    	skip=0;
     	return turn;
     }
     
@@ -142,10 +146,9 @@ public class Game extends Observable {
 	private void cardEffect(Card playedCard) {
 		switch(playedCard.VALUE) {
 		case REVERSE:	isClockwise= !isClockwise; break;
-		case SKIP:	changeTurn(); break;
-		case DRAW2:	playerDraw(players[changeTurn()],2); break;
-		case DRAW4:	playerDraw(players[changeTurn()],4); isClockwise= !isClockwise; changeTurn(); isClockwise= !isClockwise;    
-			changeColor(playedCard); break;
+		case SKIP:	++skip; break;
+		case DRAW2:	++skip; playerDraw(players[nextTurn()],2); break;
+		case DRAW4:	++skip; playerDraw(players[nextTurn()],4); changeColor(playedCard); break;
 		case CHANGE:	changeColor(playedCard); break;
 		default:
 			System.out.println("CARTA NORMALE");
@@ -154,7 +157,7 @@ public class Game extends Observable {
 	}
     
     private void changeColor(Card playedCard) {
-    	if (getTurn()!=0) playedCard.setColor(Color.values() [(int) (5*Math.random())]);
+    	if (getTurn()!=0) playedCard.setColor(Color.values() [(int) (4*Math.random())]);
     	else {
     		setChanged();
 			notifyObservers("ChangeColor");
@@ -162,13 +165,13 @@ public class Game extends Observable {
     }
 	
 	public void playerDraw(Entity e, int n) {
-		if (!hasPlayerDrawn) {
+		if (!hasPlayerDrawn && !hasPlayerPlayed) {
 			for (int i=0; i<n; i++) {
 				e.drawFrom();
 				setChanged();
 				notifyObservers("Draw");}
 		}
-		hasPlayerDrawn=true;
+		if (turn==0) hasPlayerDrawn=true;
 	}
 	
 	private boolean canPass() {
@@ -210,9 +213,9 @@ public class Game extends Observable {
 			pile.addFirst(discard);
 			setChanged();
 			notifyObservers("Play");
-		//	hasPlayerPlayed=true;
 			//l'effetto della carta si attiva
 			cardEffect(discard);
+			//	hasPlayerPlayed=true;
 		}	
 		else {
 			setChanged();
