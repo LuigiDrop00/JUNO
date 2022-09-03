@@ -20,8 +20,8 @@ public class Game extends Observable {
 		public void play(Card discard) {
 			while (!hasPlayerPlayed) {
 			
-			//restituisce una lista di carte giocabili secondo le regole
-			ArrayList<Card> playable=(ArrayList<Card>) this.HAND.stream().filter((x)->validPlay.run(x, Game.this)).collect(Collectors.toList());
+			//restituisce una lista di carte giocabili secondo le regole              //DA LEVARE O CAMBIARE VALIDPLAY
+			ArrayList<Card> playable=(ArrayList<Card>) this.HAND.stream().filter((x)->(x.getColor().equals(discard.getColor()) || x.getColor()==Color.BLACK || x.VALUE.equals(discard.VALUE))).collect(Collectors.toList());
 				
 			if (playable.isEmpty()) {
 				playerDraw(this,1);
@@ -31,25 +31,27 @@ public class Game extends Observable {
 		    		HAND.remove(drawn);
 					setChanged();
 					notifyObservers("Play");
-					cardEffect.activate(Game.this, drawn);
 					hasPlayerPlayed=true;
+					cardEffect.activate(Game.this, drawn);
+					
 				}
 				else {
 					setChanged();
 					notifyObservers("Pass");
+					hasPlayerPlayed=true;
 				}
 			}
 			else {
 				Card drawn= playable.get(0);
-				
+				if (validPlay.run(drawn, Game.this)) {
 					pile.addFirst(drawn);
 					HAND.remove(drawn);
 					setChanged();
 					notifyObservers("Play");
-					cardEffect.activate(Game.this, playable.get(0));
 					hasPlayerPlayed=true;
+					cardEffect.activate(Game.this, drawn);
 					}
-					
+				}	
 			}
 			hasPlayerPlayed=false;
 		}
@@ -162,6 +164,7 @@ public class Game extends Observable {
 			pile.addFirst(first);
 			}
 		cardEffect.activate(this, first);
+		System.out.println("PROMA CARTA: "+ first);
     }
     
     public void aiTurn() {
@@ -235,6 +238,10 @@ public class Game extends Observable {
 	}
 	
 	public void playerPlay(Card discard) {
+		if(discard.VALUE==Value.DRAW2) {
+			System.out.println("ATTENZIONE");
+		}
+		
 		if (validPlay.run(discard, this)) { 
 			if (p1.HAND.size()==2 && uno==false) {			
 				setChanged();
@@ -248,8 +255,9 @@ public class Game extends Observable {
 			setChanged();
 			notifyObservers("Play");
 			//l'effetto della carta si attiva
-			cardEffect.activate(this, discard);
 			hasPlayerPlayed=true;
+			cardEffect.activate(this, discard);
+			
 		}	
 		else {
 			setChanged();
