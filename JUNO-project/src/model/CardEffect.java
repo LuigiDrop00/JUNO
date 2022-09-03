@@ -1,5 +1,5 @@
 package model;
 
-interface cardEffect {
+interface CardEffect {
 	void activate(Game game, Card playedCard);
 }

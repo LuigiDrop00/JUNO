@@ -228,7 +228,6 @@ public class GameController implements Observer{
 	@FXML
 	public void initialize() throws FileNotFoundException {
 		game=new Game();
-		game.setGameMode("classic");
 		players=Game.players;
 		
 		for (Card card : players[0].HAND) {
@@ -285,7 +284,7 @@ public class GameController implements Observer{
 		String action= (String) arg;
 		Entity p= players[game.getTurn()];
 		switch (action) {
-		case "Draw": try { animateDraw(game.getTurn()+game.getSkip());} catch (FileNotFoundException e) { e.printStackTrace();}
+		case "Draw": try { animateDraw(game.getTurn(game.getSkip()));} catch (FileNotFoundException e) { e.printStackTrace();}
 						AudioManager.play("Draw.wav", false); break;
 		case "Play": try {
 				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+Game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();}

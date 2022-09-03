@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Game;
 
 public class PreGameSettingsController {
 
@@ -15,6 +16,18 @@ public class PreGameSettingsController {
 	private Scene scene;
 	private Parent root;
 	
+	public void clickClassic() {
+		Game.setGameMode("classic");
+	}
+	
+	public void clickTeams() {
+		Game.setGameMode("teams");
+	}
+	
+	public void clickChaos() {
+		Game.setGameMode("chaos");
+		System.out.println("CHAOOOOOOOOOOOOOOOOOS");
+	}
 	
 	public void startGame(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("/views/GameView.fxml"));
