@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
 
-public class JUNO extends Application {
+public class JUno extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {

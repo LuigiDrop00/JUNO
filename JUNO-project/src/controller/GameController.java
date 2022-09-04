@@ -383,6 +383,7 @@ public class GameController implements Observer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			music.stop();
 			win.play(false);
 			break; // TODO play musica vittoriosa? e mostrare schermata risultati?
 		case "Loss":
@@ -400,6 +401,7 @@ public class GameController implements Observer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			music.stop();
 			loss.play(false);
 			break; // TODO play musica triste? e mostrare schermata risultati?
 		}
