@@ -17,7 +17,7 @@ public class Card {
 		return color;
 	}
 	public void setColor(Color color) {
-		if (this.VALUE.equals(Value.CHANGE)||this.VALUE.equals(Value.DRAW4)) this.color = color;
+		if (this.VALUE.equals(Value.CHANGE)||this.VALUE.equals(Value.DRAW4)||this.VALUE.equals(Value.SEVEN)) this.color = color;
 	}
 	
 	@Override

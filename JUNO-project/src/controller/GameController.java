@@ -64,7 +64,7 @@ public class GameController implements Observer{
 	private AnchorPane pannelloScegli;
 
 	@FXML
-	private void clickGreen() { onColorChoosen(Color.GREEN); System.out.print("skfnsnfnslfsn");}
+	private void clickGreen() { onColorChoosen(Color.GREEN);}
 	@FXML
 	private void clickYellow() { onColorChoosen(Color.YELLOW);}
 	@FXML
@@ -211,7 +211,6 @@ public class GameController implements Observer{
 	}
 
 	public void onDiscard(String path, MouseEvent event) throws FileNotFoundException {
-		System.out.println("che cazzo ne so: "+path);
 		lastPlayedCard = (ImageView) event.getTarget();
 		if (game.getTurn() == 0) {
 			game.playerPlay(Card.pathToCard(path));
@@ -225,10 +224,23 @@ public class GameController implements Observer{
 	
 	Game game;
 	Entity[] players;
+	AudioManager music;
+	AudioManager draw;
+	AudioManager play;
+	AudioManager uno;
+	
 	@FXML
 	public void initialize() throws FileNotFoundException {
+		
 		game=new Game();
 		players=Game.players;
+		
+		music = new AudioManager("Still alive Radio loop.mp3");
+		draw = new AudioManager("Draw.wav");
+		play = new AudioManager("Play.wav");
+		uno = new AudioManager("uno.wav");
+		
+		music.play(true);
 		
 		for (Card card : players[0].HAND) {
 			System.out.println(card.toString());
@@ -252,6 +264,7 @@ public class GameController implements Observer{
 	}
 	
 	public void exit(ActionEvent event) throws IOException{
+
 		for (Entity e:players) {
 			//resetta le mani dei giocatori
 			Deck.getInstance().refill(e.HAND);
@@ -259,7 +272,8 @@ public class GameController implements Observer{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setContentText("sei sicuro di uscire dalla Partita?");
 		
-		if(alert.showAndWait().get() == ButtonType.OK) {		
+		if(alert.showAndWait().get() == ButtonType.OK) {
+			music.stop();
 			root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
 			stage = (Stage)((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
@@ -285,13 +299,13 @@ public class GameController implements Observer{
 		Entity p= players[game.getTurn()];
 		switch (action) {
 		case "Draw": try { animateDraw(game.getTurn(game.getSkip()));} catch (FileNotFoundException e) { e.printStackTrace();}
-						AudioManager.play("Draw.wav", false); break;
+				draw.play(false);	break;
 		case "Play": try {
 				animateDiscard(new ImageView(new Image(new FileInputStream("src/cardsImages/"+Game.pile.get(0).toString()))), game.getTurn()); } catch (FileNotFoundException e) {e.printStackTrace();}
-						AudioManager.play("Play.wav", false); break; 
+						play.play(false); break; 
 		case "ChangeColor": openChooseColor(); break; //TODO chiamare il metodo pop-up scegli colore
-		case "Pass":AudioManager.play("tuesday-glitch-soft-hip-hop-118327.mp3", true); break; //TODO aggiorna il colore 
-		case "Uno": AudioManager.play("uno.wav", false); break;
+		case "Pass": break; //TODO aggiorna il colore 
+		case "Uno": uno.play(false); break;
 		case "NoUno": break; 
 		case "IncorrectPlay": break;
 		case "Victory": break; //TODO play musica vittoriosa? e mostrare schermata risultati?

@@ -1,5 +1,7 @@
 package model;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,6 +17,8 @@ public class Game extends Observable {
 
 		private Ai(String nickname) {
 			super(nickname);
+			String sep= FileSystems.getDefault().getSeparator();
+			setAvatar(Paths.get("src"+sep+"profilePic"+sep+"images"+((int) (20*Math.random())+1)+".jpg").toAbsolutePath().toString());
 		}
 		@Override
 		public void play(Card discard) {
@@ -32,8 +36,9 @@ public class Game extends Observable {
 					setChanged();
 					notifyObservers("Play");
 					hasPlayerPlayed=true;
-					cardEffect.activate(Game.this, drawn);
-					
+					cardEffect.activate(Game.this, drawn);		
+					setChanged();
+					notifyObservers("Pass");
 				}
 				else {
 					setChanged();
@@ -50,6 +55,8 @@ public class Game extends Observable {
 					notifyObservers("Play");
 					hasPlayerPlayed=true;
 					cardEffect.activate(Game.this, drawn);
+					setChanged();
+					notifyObservers("Pass");
 					}
 				}	
 			}
@@ -212,7 +219,11 @@ public class Game extends Observable {
 	}  */
     
     void changeColor(Card playedCard) {
-    	if (getTurn()!=0 || playedCard.VALUE==Value.SETTE) playedCard.setColor(Color.values() [(int) (4*Math.random())]);
+    	if (getTurn()!=0 || playedCard.VALUE==Value.SEVEN) {
+    	
+    		System.out.println("colore cambiatoooooooooooooo");
+    		playedCard.setColor(Color.values() [(int) (4*Math.random())]);
+    	}
     	else {
     		setChanged();
 			notifyObservers("ChangeColor");
@@ -247,6 +258,8 @@ public class Game extends Observable {
 	
 	public void pass() {
 		if(canPass()) {
+			setChanged();
+			notifyObservers("Pass");
 			uno=false;
 			hasPlayerPlayed=false;
 	    	hasPlayerDrawn = false;
@@ -274,8 +287,7 @@ public class Game extends Observable {
 			notifyObservers("Play");
 			//l'effetto della carta si attiva
 			hasPlayerPlayed=true;
-			cardEffect.activate(this, discard);
-			
+			cardEffect.activate(this, discard);			
 		}	
 		else {
 			setChanged();

@@ -10,7 +10,7 @@ interface CardEffectChaos extends CardEffect{
 			case DRAW4: game.setHasPlayerPlayed(false);	game.increaseSkip(); game.playerDraw(Game.players[game.nextTurn()],4); game.changeColor(playedCard); game.setHasPlayerPlayed(true); break;
 			case CHANGE:	game.changeColor(playedCard); break;
 			case ZERO: game.setHasPlayerPlayed(false); break;
-			case SETTE: game.changeColor(playedCard); break;
+			case SEVEN: game.changeColor(playedCard); break;
 			default:	break;
 			}
 //		}

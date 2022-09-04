@@ -47,6 +47,7 @@ public class MainMenuController {
 	
 	@FXML
 	public void initialize() throws FileNotFoundException {
+		
 		Player p = LoginState.getLoggedPlayer();
 		System.out.println(p);
 		if (!(p == null)) {

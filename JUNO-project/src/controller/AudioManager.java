@@ -10,12 +10,24 @@ import javafx.scene.media.*;
 
 public class AudioManager
 {
-	static void play(String name, boolean loop) {
+	MediaPlayer audio;
+	
+	AudioManager(String name){
 		String sep= FileSystems.getDefault().getSeparator();
 		Path path= Paths.get("src"+sep+"audioFiles"+sep+name).toAbsolutePath();
-		MediaPlayer m= new MediaPlayer(new Media(path.toUri().toString()));
-		if(loop) m.setCycleCount(MediaPlayer.INDEFINITE);
-		m.play();
+		audio= new MediaPlayer(new Media(path.toUri().toString()));
 	}
-
+	
+	void play (boolean loop) {
+		if (loop) {
+			audio.setVolume(0.2);
+			audio.setCycleCount(MediaPlayer.INDEFINITE);
+		}
+		else  audio.setOnEndOfMedia(this::stop);
+		audio.play();
+	}
+	
+	void stop() {
+		audio.stop();
+	}
 }
