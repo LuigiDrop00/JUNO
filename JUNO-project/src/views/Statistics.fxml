@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StatisticsController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@sfondo.jpg" />
+         </image>
+      </ImageView>
+      <Text fill="#ffee00" layoutX="3.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER STAT:" textAlignment="CENTER" wrappingWidth="893.872255563736">
+         <font>
+            <Font name="Calibri" size="96.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fill="#ffee00" layoutX="172.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Played Games:" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fill="#ffee00" layoutX="172.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wins:" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fill="#ffee00" layoutX="172.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Losses:" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fill="#ffee00" layoutX="172.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Level:" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fill="#ffee00" layoutX="172.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EXP Gained:" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Line endX="343.0" layoutX="262.0" layoutY="371.0" startX="-100.0" />
+      <Text fx:id="gamesPlayed" layoutX="411.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fx:id="wins" layoutX="411.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fx:id="losses" layoutX="411.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fx:id="currentLevel" layoutX="411.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fx:id="expGained" layoutX="411.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="239.00000935792923">
+         <font>
+            <Font name="Calibri" size="37.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Button layoutX="50.0" layoutY="39.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="31.0" prefWidth="85.0" style="-fx-background-radius: 30;" text="&lt;- Back" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EndgameController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true">
+         <image>
+            <Image url="@sfondo.jpg" />
+         </image>
+      </ImageView>
+      <Ellipse fill="#ff1f1f" layoutX="450.0" layoutY="145.0" radiusX="263.0" radiusY="91.0" rotate="-5.7" stroke="BLACK" strokeType="INSIDE" />
+      <Text fill="#ffee00" layoutX="87.0" layoutY="174.0" rotate="-11.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GAME LOST" textAlignment="CENTER" wrappingWidth="726.0941183567047">
+         <font>
+            <Font name="Sitka Text Bold" size="110.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="-10.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fill="#ffee00" layoutX="14.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="try again next time!" textAlignment="CENTER" wrappingWidth="879.872255563736">
+         <font>
+            <Font name="Sitka Text Italic" size="67.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Text fx:id="expSconfitta" fill="#ffee00" layoutX="14.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="here +20 EXP for you!" textAlignment="CENTER" wrappingWidth="879.872255563736">
+         <font>
+            <Font name="Sitka Text Italic" size="67.0" />
+         </font>
+         <effect>
+            <DropShadow height="0.0" offsetX="1.0" radius="0.0" width="0.0" />
+         </effect>
+      </Text>
+      <Button layoutX="316.0" layoutY="269.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="92.0" prefWidth="276.0" style="-fx-background-radius: 30;" text="BACK TO MAIN MENU">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

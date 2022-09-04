@@ -42,9 +42,9 @@
             <DropShadow height="0.0" offsetX="-10.0" radius="0.0" width="0.0" />
          </effect>
       </Text>
-      <Pane fx:id="profileCard" layoutX="620.0" layoutY="20.0" prefHeight="163.0" prefWidth="262.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 10; -fx-border-color: black; -fx-border-width: 5; -fx-border-radius: 7.5;">
+      <Pane fx:id="profileCard" layoutX="620.0" layoutY="20.0" prefHeight="182.0" prefWidth="262.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 10; -fx-border-color: black; -fx-border-width: 5; -fx-border-radius: 7.5;">
          <children>
-            <Button layoutX="10.0" layoutY="59.0" mnemonicParsing="false" onAction="#switchToUserSettings" prefHeight="21.0" prefWidth="152.0" style="-fx-background-color: transparent;" text="Modifica Account" textAlignment="CENTER" underline="true" wrapText="true">
+            <Button layoutX="3.0" layoutY="67.0" mnemonicParsing="false" onAction="#switchToUserSettings" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: transparent;" text="Modify Profile" underline="true" wrapText="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -62,32 +62,37 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <ProgressBar fx:id="barraProgressi" cache="true" layoutX="14.0" layoutY="126.0" prefHeight="23.0" prefWidth="141.0" progress="0.46" />
-            <Text fx:id="livelloSuccessivo" layoutX="168.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LVL.4" underline="true">
+            <ProgressBar fx:id="barraProgressi" cache="true" layoutX="16.0" layoutY="145.0" prefHeight="23.0" prefWidth="141.0" progress="0.46" />
+            <Text fx:id="livelloSuccessivo" layoutX="170.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LVL.4" underline="true">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
             </Text>
-            <Text fx:id="expMassima" layoutX="134.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100XP">
+            <Text fx:id="expMassima" layoutX="136.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100XP">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <Text fx:id="expMinima" layoutX="14.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0XP">
+            <Text fx:id="expMinima" layoutX="16.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0XP">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="14.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIV.ATTUALE:" underline="true">
+            <Text layoutX="14.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curr. Level:">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Text fx:id="livello" layoutX="127.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+            <Text fx:id="livello" layoutX="120.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
                <font>
                   <Font name="System Bold" size="25.0" /> 
                </font>
             </Text>
+            <Button layoutX="5.0" layoutY="97.0" mnemonicParsing="false" onAction="#switchToUserStatistics" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: transparent;" text="Visualize Statistics" underline="true" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
