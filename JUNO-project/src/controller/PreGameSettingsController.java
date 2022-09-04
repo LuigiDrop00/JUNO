@@ -1,8 +1,10 @@
 package controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,6 +18,11 @@ public class PreGameSettingsController {
 	private Scene scene;
 	private Parent root;
 	
+	@FXML
+	public void initialize() throws FileNotFoundException {
+		Game.setGameMode("classic");
+	}
+	
 	public void clickClassic() {
 		Game.setGameMode("classic");
 	}
@@ -26,7 +33,6 @@ public class PreGameSettingsController {
 	
 	public void clickChaos() {
 		Game.setGameMode("chaos");
-		System.out.println("CHAOOOOOOOOOOOOOOOOOS");
 	}
 	
 	public void startGame(ActionEvent event) throws IOException {

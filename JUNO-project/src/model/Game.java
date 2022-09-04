@@ -118,21 +118,39 @@ public class Game extends Observable {
     	return turn;
     }
     public int getTurn(int s) {
-    	return turn + s;
+    	if(isClockwise) return increaseTurn(s);
+    	else return decreaseTurn(s);
     }
     private int increaseTurn(){
     	if (turn+1 >= 4) return 0;
         else return turn + 1;
     }
     private int decreaseTurn() {
+    	
     	if (turn-1 <= -1) return 3;
         else return turn-1;
     }
+    private int decreaseTurn(int s) {
+    	int turno=turn;
+    	for (int i=0; i<s; i++) {
+    		turno= turn-1 <= -1 ? 3 : turn-1; 
+    	}
+    	return turno;
+    }
+    private int increaseTurn(int s){
+    	int turno=turn;
+    	for (int i=0; i<s; i++) {
+    		turno= turn+1 >= 4 ? 0 : turn+1; 
+    	}
+    	return turno;
+    }
+
     int nextTurn() {	
     	if(isClockwise) return increaseTurn();
     	else return decreaseTurn();
     }
     private int changeTurn() {
+    	System.out.println("Giocatore"+turn+": "+players[turn].HAND);
     	for (int i=0; i<=skip; i++) turn=nextTurn();
     	skip=0;
     	return turn;
