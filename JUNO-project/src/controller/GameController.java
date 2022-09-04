@@ -366,7 +366,7 @@ public class GameController implements Observer {
 			break;
 		case "NoUno":
 			break;
-		case "IncorrectPlay": error.play(false);
+		case "InvalidPlay": error.play(false);
 			break;
 		case "Win":
 			for (Entity e : players) {

@@ -94,6 +94,13 @@ public class MainMenuController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	public void switchToUserStatistics(ActionEvent event) throws IOException {
+		root = FXMLLoader.load(getClass().getResource("/views/Statistics.fxml"));
+		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 
 	@FXML
 	private Button logoutButton;
