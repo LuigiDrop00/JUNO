@@ -228,6 +228,9 @@ public class GameController implements Observer{
 	AudioManager draw;
 	AudioManager play;
 	AudioManager uno;
+	AudioManager error;
+	AudioManager win;
+	AudioManager loss;
 	
 	@FXML
 	public void initialize() throws FileNotFoundException {
@@ -239,6 +242,9 @@ public class GameController implements Observer{
 		draw = new AudioManager("Draw.wav");
 		play = new AudioManager("Play.wav");
 		uno = new AudioManager("uno.wav");
+		error = new AudioManager("chord.wav");
+		win = new AudioManager("crowd-cheer-ii-6263.mp3");
+		loss = new AudioManager("no-luck-too-bad-disappointing-sound-effect-112943.mp3");
 		
 		music.play(true);
 		
@@ -307,9 +313,9 @@ public class GameController implements Observer{
 		case "Pass": break; //TODO aggiorna il colore 
 		case "Uno": uno.play(false); break;
 		case "NoUno": break; 
-		case "IncorrectPlay": break;
-		case "Victory": break; //TODO play musica vittoriosa? e mostrare schermata risultati?
-		case "Loss": break; //TODO play musica triste? e mostrare schermata risultati?
+		case "InvalidPlay": error.play(false); break;
+		case "Win": win.play(false); break; //TODO play musica vittoriosa? e mostrare schermata risultati?
+		case "Loss": loss.play(false); break; //TODO play musica triste? e mostrare schermata risultati?
 		}
 		System.out.println("azione-eseguita: "+arg);
 		System.out.println("giocatore: "+ game.getTurn());
