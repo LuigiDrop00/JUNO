@@ -47,9 +47,11 @@ public class Deck {
 		deck.add(new Card(Color.BLACK, Value.DRAW4));
 		deck.add(new Card(Color.BLACK, Value.DRAW4));
 
-		
-		//stampaMazzo();
 	}
+	/**
+	 * Removes and returns the first Card in the deck. If there are no Cards left the Deck is refilled with the Cards in the discard pile, defined in the class model.Game.
+	 * @return
+	 */
 	Card draw(){
 		if (deck.isEmpty()) {
 			Card last= Game.pile.pop();
@@ -58,15 +60,19 @@ public class Deck {
 		}
 		return deck.pop();
 	}
-	//usata solo da refill?
-	public void shuffleDeck(){
+	/**
+	 * Shuffles the deck
+	 */
+	private void shuffleDeck(){
 		Collections.shuffle(deck);
 	}
 	/** checks whether the deck is empty or not **/
 	public boolean isEmpty() { 
 		return deck.size() == 0;
 	}
-	
+	/**
+	 * The Deck is refilled with the Cards in pile, until pile is empty
+	 */
 	public void refill(List<Card> pile) {
 		while(!pile.isEmpty()) {
 			Card card=pile.get(0);

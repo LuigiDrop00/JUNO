@@ -15,18 +15,34 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoginState;
 import model.Player;
-
+/**
+ * Controller that handles the Registrazione view
+ */
 public class RegistrazioneController {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
 
+	/**
+	 * Text field where to put the nickname
+	 */
 	@FXML
 	private TextField nickname;
+	/**
+	 * Text field where to put the password
+	 */
 	@FXML
 	private PasswordField password;
+	/**
+	 * Text that pops up if there is an error
+	 */
 	@FXML
 	private Text errore;
+	/**
+	 * Creates a new account with the inserted nickname and password
+	 * @param event
+	 * @throws IOException
+	 */
 	public void onSubmit(ActionEvent event) throws IOException {
 		String nick = nickname.getText();
 		String passwd = password.getText();

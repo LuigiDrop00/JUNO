@@ -9,14 +9,25 @@ import java.io.ObjectInputStream;
 
 import java.io.ObjectOutputStream;
 import java.nio.file.*;
-
-
-
+/**
+ * Class that represents an human player and their account
+ */
 public class Player extends Entity implements java.io.Serializable {
-	
+	/**
+	 * The password of the account associated with the nickname of the Player
+	 */
 	private String password;
+	/**
+	 * The number of Games lost
+	 */
 	private int losses;
+	/**
+	 * The number of Games won
+	 */
 	private int victories;
+	/**
+	 * The number of experience points gained 
+	 */
 	private int exp;
 	private static final long serialVersionUID = 2451423441245l;
 	
@@ -24,17 +35,26 @@ public class Player extends Entity implements java.io.Serializable {
 		super(nickname);
 		this.password=password;
 	}
-	
+	/**
+	 * Returns the level of the Player calculated with a function with the number of exp as a variable
+	 * @return
+	 */
 	public int getLevel() {
 		return (int) (Math.log(exp/10 +2)/Math.log(2));
 	}
 	public int getExp() {
 		return exp;
 	}
+	/**
+	 * Adds up exp
+	 * @param up
+	 */
 	public void expUp(int up) {
 		exp+=up;
 	}
-	
+	/**
+	 * Changes the nickname and updates the saved profile
+	 */
 	@Override
 	public void setNickname(String nickname) {
 		
@@ -49,7 +69,10 @@ public class Player extends Entity implements java.io.Serializable {
 		super.setNickname(nickname);
 		this.create();
 	}
-	
+	/**
+	 * Creates a text file in savedProfiles to save the Player object in, with the name as the nickname of the Player
+	 * @return
+	 */
 	public Player create() {
 		
 		String sep= FileSystems.getDefault().getSeparator();
@@ -79,7 +102,15 @@ public class Player extends Entity implements java.io.Serializable {
 		}
 			
 	}
-	
+	/**
+	 * Loads and returns a Player object from a text file named after in which it was saved. 
+	 * Also checks if the password in input is the same password used for the Player object with the same nickname as the one in input.
+	 * @param nickname
+	 * @param password
+	 * @return
+	 * @throws IncorrectPasswordException
+	 * @throws SaveNotFoundException
+	 */
 	public static Player load(String nickname, String password) throws IncorrectPasswordException, SaveNotFoundException {
 		
 		String sep= FileSystems.getDefault().getSeparator();
@@ -117,7 +148,10 @@ public class Player extends Entity implements java.io.Serializable {
 			throw new SaveNotFoundException();
 		}
 	}
-	
+	/**
+	 * Saves the changes to an already created text file in which the Player object is saved in
+	 * @throws SaveNotFoundException
+	 */
 	public void save() throws SaveNotFoundException {
 		
 		String sep= FileSystems.getDefault().getSeparator();
@@ -136,7 +170,9 @@ public class Player extends Entity implements java.io.Serializable {
 	public int getLosses() {
 		return losses;
 	}
-
+	/**
+	 * Increases losses field by 1
+	 */
 	void lossesUp() {
 		++losses;
 	}
@@ -144,11 +180,17 @@ public class Player extends Entity implements java.io.Serializable {
 	public int getVictories() {
 		return victories;
 	}
-
+	/**
+	 * Increases wins field by 1
+	 */
 	void victoriesUp() {
 		++victories;
 	}
-	
+	/**
+	 * 
+	 * Return the number of total Games played
+	 * @return
+	 */
 	public int getGames() {
 		return losses+victories;
 	}

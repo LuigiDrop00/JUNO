@@ -1,0 +1,340 @@
+@startuml
+class model.Deck {
+- {static} Deck istanza
+- LinkedList<Card> deck
+- <<Create>> Deck()
++ {static} Deck getInstance()
+~ Card draw()
+- void shuffleDeck()
++ boolean isEmpty()
++ void refill(List<Card>)
+}
+class controller.SettingsController {
+- Stage stage
+- Scene scene
+- Parent root
++ void backToMainMenu(ActionEvent)
+}
+class model.Card {
+- Color color
++ Value VALUE
+~ <<Create>> Card(Color,Value)
++ Color getColor()
++ void setColor(Color)
++ boolean equals(Object)
++ String toString()
++ {static} Card pathToCard(String)
+}
+interface model.CardEffect {
+~ void activate(Game,Card)
+}
+class controller.EndgameController {
+- Stage stage
+- Scene scene
+- Parent root
++ void backToMainMenu(ActionEvent)
+}
+interface model.CardEffectChaos {
+~ void activate(Game,Card)
+}
+interface model.ValidPlay {
+~ boolean run(Card,Game)
+}
+interface model.GameOverConditions {
+~ String conditions()
+}
+class controller.UserSettingsController {
++ Image[] profileImages
+- int profileImagesIndex
+- File[] listOfImages
+- TextField nickField
+- Stage stage
+- Scene scene
+- Parent root
+- ImageView profilePic
++ <<Create>> UserSettingsController()
++ void initialize()
++ void backToMainMenu(ActionEvent)
++ void immagineSuccessiva()
++ void immaginePrecedente()
+}
+class controller.StatisticsController {
+- Stage stage
+- Scene scene
+- Parent root
+- Player p
+- Text wins
++ void initialize()
++ void backToMainMenu(ActionEvent)
+}
+class controller.LoginOrRegisterController {
+- Stage stage
+- Scene scene
+- Parent root
+- TextField nickname
+- PasswordField password
+- Text errore
++ void backToMainMenu(ActionEvent)
++ void switchToRegistrazione(ActionEvent)
++ void onSubmit(ActionEvent)
+}
+class model.Game {
+- Player p1
++ {static} Entity[] players
+- {static} GameOverConditions gameOverConditions
+- {static} ValidPlay validPlay
+- {static} CardEffect cardEffect
+- {static} Deck deck
++ {static} LinkedList<Card> pile
+- boolean uno
+- int draw
+- boolean hasPlayerPlayed
+- boolean hasPlayerDrawn
+- boolean isClockwise
+- int turn
+- int skip
++ <<Create>> Game()
++ {static} void setGameMode(String)
+~ int getDraw()
+~ void setDraw(int)
+~ void setHasPlayerPlayed(boolean)
+~ boolean getHasPlayerPlayed()
+~ void invertTurn()
++ int getSkip()
+~ void increaseSkip()
++ int getTurn()
++ int nextTurn(int)
+- int increaseTurn()
+- int decreaseTurn()
+- int decreaseTurn(int)
+- int increaseTurn(int)
+~ int nextTurn()
+- int changeTurn()
++ void aiTurn()
+~ void changeColor(Card)
++ void playerDraw(Entity,int)
+- boolean canPass()
++ void pass()
++ void playerPlay(Card)
++ void pressUno()
+- void win()
+- void loss()
+}
+class model.Game.Ai {
+- <<Create>> Ai(String)
++ void play(Card)
+}
+class model.LoginState {
+- {static} Player loggedPlayer
+- <<Create>> LoginState()
++ {static} Player getLoggedPlayer()
++ {static} void setLoggedPlayer(Player)
+}
+class model.IncorrectPasswordException {
+}
+class controller.PreGameSettingsController {
+- Stage stage
+- Scene scene
+- Parent root
++ void initialize()
++ void clickClassic()
++ void clickTeams()
++ void clickChaos()
++ void startGame(ActionEvent)
++ void backToMainMenu(ActionEvent)
+}
+enum model.Color {
++  YELLOW
++  RED
++  GREEN
++  BLUE
++  BLACK
+}
+interface model.ValidPlayClassic {
+~ boolean run(Card,Game)
+}
+interface model.ValidPlayChaos {
+~ boolean run(Card,Game)
+}
+class controller.AudioManager {
+~ MediaPlayer audio
+~ <<Create>> AudioManager(String)
+~ void play(boolean)
+~ void stop()
+}
+enum model.Value {
++  ZERO
++  ONE
++  TWO
++  THREE
++  FOUR
++  FIVE
++  SIX
++  SEVEN
++  EIGHT
++  NINE
++  REVERSE
++  SKIP
++  DRAW2
++  DRAW4
++  CHANGE
+~ int number
+~ <<Create>> Value(int)
++ int toInt()
+}
+class controller.RegistrazioneController {
+- Stage stage
+- Scene scene
+- Parent root
+- TextField nickname
+- PasswordField password
+- Text errore
++ void onSubmit(ActionEvent)
++ void backToLogin(ActionEvent)
++ void backToMainMenu(ActionEvent)
+}
+abstract class model.Entity {
+- String nickname
+- String avatar
++ ArrayList<Card> HAND
+~ <<Create>> Entity(String)
++ String getNickname()
++ void setNickname(String)
++ String getAvatar()
++ void setAvatar(String)
+~ void drawFrom()
+~ void drawFrom(int)
+}
+class model.SaveNotFoundException {
+}
+interface model.GameOverConditionsTeam {
+~ String conditions()
+}
+class controller.GameController {
+- Stage stage
+- Scene scene
+- Parent root
+- Button exitButton
+- AnchorPane scenePane
+- ImageView playerAvatar
+- Text playerName
+- TilePane mazzoCarte
+- Text currentColor
+- TilePane mano0
+- TilePane mano1
+- TilePane mano2
+- TilePane mano3
+- ImageView scarti
+- ImageView mazzo
+- ImageView lastPlayedCard
+- AnchorPane pannelloScegli
+~ Game game
+~ Entity[] players
+~ AudioManager music
+~ AudioManager draw
+~ AudioManager play
+~ AudioManager uno
+~ AudioManager error
+~ AudioManager win
+~ AudioManager loss
+- void clickGreen()
+- void clickYellow()
+- void clickRed()
+- void clickBlue()
+- void openChooseColor()
+- void onColorChoosen(Color)
++ void animateDiscard(ImageView,int)
++ void animateDraw(int)
++ void onDiscard(String,MouseEvent)
++ void onDraw(MouseEvent)
++ void initialize()
++ void exit(ActionEvent)
+- void passaTurno()
+- void clickUno()
++ void update(Observable,Object)
++ void rosso(MouseEvent)
+}
+interface model.GameOverConditionsClassic {
+~ String conditions()
+}
+class application.JUno {
++ void start(Stage)
++ {static} void main(String[])
+}
+interface model.CardEffectClassic {
+~ void activate(Game,Card)
+}
+class model.Player {
+- String password
+- int losses
+- int victories
+- int exp
+- {static} long serialVersionUID
++ <<Create>> Player(String,String)
++ int getLevel()
++ int getExp()
++ void expUp(int)
++ void setNickname(String)
++ Player create()
++ {static} Player load(String,String)
++ void save()
++ int getLosses()
+~ void lossesUp()
++ int getVictories()
+~ void victoriesUp()
++ int getGames()
+}
+class controller.MainMenuController {
+- Text nickname
+- Text livello
+- ImageView profilePic
+- Pane profileCard
+- ProgressBar barraProgressi
+- Stage stage
+- Scene scene
+- Parent root
+- Button logoutButton
+- AnchorPane scenePane
++ void initialize()
++ void switchToStartGame(ActionEvent)
++ void switchToLogin(ActionEvent)
++ void switchToUserSettings(ActionEvent)
++ void switchToUserStatistics(ActionEvent)
++ void exit()
+}
+
+
+model.CardEffect <|-- model.CardEffectChaos
+java.util.Observable <|-- model.Game
+model.Game +.. model.Game.Ai
+model.Entity <|-- model.Game.Ai
+model.Exception <|-- model.IncorrectPasswordException
+model.ValidPlay <|-- model.ValidPlayClassic
+model.ValidPlay <|-- model.ValidPlayChaos
+model.Exception <|-- model.SaveNotFoundException
+model.GameOverConditions <|-- model.GameOverConditionsTeam
+java.util.Observer <|.. controller.GameController
+model.GameOverConditions <|-- model.GameOverConditionsClassic
+javafx.application.Application <|-- application.JUno
+model.CardEffect <|-- model.CardEffectClassic
+model.Serializable <|.. model.Player
+model.Entity <|-- model.Player
+
+model.Player<--model.Game
+model.GameOverConditions<--model.Game
+model.ValidPlay<--model.Game
+model.CardEffect<--model.Game
+model.Deck<--model.Game
+
+model.Card<--model.Deck
+
+model.Value<--model.Card
+model.Color<--model.Card
+
+model.Player<--model.LoginState
+model.Player<--controller.StatisticsController
+
+model.Entity<--controller.GameController
+model.Game<--controller.GameController
+controller.AudioManager<--controller.GameController
+@enduml

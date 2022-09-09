@@ -17,7 +17,9 @@ import model.IncorrectPasswordException;
 import model.LoginState;
 import model.Player;
 import model.SaveNotFoundException;
-
+/**
+ * Controller that handles the LoginOrRegister view
+ */
 public class LoginOrRegisterController {
 	private Stage stage;
 	private Scene scene;
@@ -38,14 +40,28 @@ public class LoginOrRegisterController {
 		stage.setScene(scene);
 		stage.show();
 	}
-
+	/**
+	 * Text field where to put the nickname
+	 */
 	@FXML
 	private TextField nickname;
+	/**
+	 * Text field where to put the password
+	 */
 	@FXML
 	private PasswordField password;
+	/**
+	 * Text that pops up if there is an error
+	 */
 	@FXML
 	private Text errore;
 
+	/**
+	 * Checks if the nickname and password are correct
+	 * @param event
+	 * @throws SaveNotFoundException
+	 * @throws IOException
+	 */
 	public void onSubmit(ActionEvent event) throws SaveNotFoundException, IOException {
 		// INSERTED CREDENTIALS
 		String nick = nickname.getText();

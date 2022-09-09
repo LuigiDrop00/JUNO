@@ -15,10 +15,16 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.umlet.plugin.umletBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.umlet.plugin.umletNature</nature>
 	</natures>
 	<filteredResources>
 		<filter>

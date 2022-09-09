@@ -7,13 +7,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * Controller that handles the Loss and Victory views both
+ */
 public class EndgameController {
 
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-
+	/**
+	 * Loads the MainMenu view
+	 * @param event
+	 */
 	public void backToMainMenu(ActionEvent event) {
 
 		try {

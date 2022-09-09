@@ -1,5 +1,7 @@
 package model;
-
+/**
+ * Functional interface which determines that, the behavior of Game when it has to check if and who won the game, has to be accordant with the team gamemode 
+ */
 public interface GameOverConditionsTeam extends GameOverConditions{
 	@Override
 	default String conditions() {

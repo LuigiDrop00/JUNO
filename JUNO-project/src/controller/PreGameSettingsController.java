@@ -11,7 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Game;
-
+/**
+ * Controller that handles the PreGameSettings view that is used to change the gamemode and start the game 
+ */
 public class PreGameSettingsController {
 
 	private Stage stage;

@@ -18,21 +18,40 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.LoginState;
-
+/**
+ * Controller that handles the UserSettings view
+ */
 public class UserSettingsController {
-
+	/**
+	 * Array of profile images
+	 */
 	public Image[] profileImages;
+	/**
+	 * The index of the profile image currently displayed
+	 */
 	private int profileImagesIndex = -1;
+	/**
+	 * Array of profile image files
+	 */
 	private File[] listOfImages = new File("src/profilePic").listFiles();
 	
+	/**
+	 * Text field where to input a new nickname
+	 */
 	@FXML
 	private TextField nickField;
 	
+	/**
+	 * Initializes nickField with the nickname of the logged player
+	 */
 	@FXML
 	public void initialize() {
 		nickField.setText(LoginState.getLoggedPlayer().getNickname());
 	}
-	
+	/**
+	 * Initializes the view with the profile images
+	 * @throws IOException
+	 */
 	public UserSettingsController() throws IOException {
 		
 		profileImages = new Image[listOfImages.length];
@@ -52,7 +71,11 @@ public class UserSettingsController {
 
 	@FXML
 	private ImageView profilePic;
-
+	/**
+	 * Returns to the MainMenu view and shows a pop-up that lets the user choose do save or discard the changes
+	 * @param event
+	 * @throws IOException
+	 */
 	public void backToMainMenu(ActionEvent event) throws IOException {
 		// prompts the user on whether saving or not the data and then changes view
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -71,12 +94,16 @@ public class UserSettingsController {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+	/**
+	 * Shows the next profile image in the list
+	 */
 	public void immagineSuccessiva() {
 		if(profileImagesIndex == profileImages.length-1) profileImagesIndex = -1;
 		profilePic.setImage(profileImages[++profileImagesIndex]);
 	}
-
+	/**
+	 * Shows the previous profile image in the list
+	 */
 	public void immaginePrecedente() {
 		if(profileImagesIndex == 0 || profileImagesIndex == -1) profileImagesIndex = profileImages.length;
 		profilePic.setImage(profileImages[--profileImagesIndex]);

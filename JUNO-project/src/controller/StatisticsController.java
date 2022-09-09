@@ -12,17 +12,27 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoginState;
 import model.Player;
-
+/**
+ * Controller that handles the Statistics view
+ */
 public class StatisticsController {
 	
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	
+	/**
+	 * The logged player
+	 */
 	private Player p = LoginState.getLoggedPlayer();
+	/**
+	 * Statistics of the logged player
+	 */
 	@FXML
 	private Text wins, losses, gamesPlayed, expGained, currentLevel;
 	
+	/**
+	 * Updates the view whit the statistics of the logged player
+	 */
 	@FXML
 	public void initialize() {
 		

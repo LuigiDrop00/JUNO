@@ -1,5 +1,7 @@
 package model;
-
+/**
+ * Functional interface which determines that, the behavior of Game when it has to activate the effect of a Card, has to be accordant with the classic gamemode 
+ */
 interface CardEffectClassic extends CardEffect {
 	default void activate(Game game, Card playedCard) {
 

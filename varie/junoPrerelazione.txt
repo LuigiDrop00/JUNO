@@ -1,0 +1,5 @@
+usare lo Strategy Pattern per Partita che cambia comportamento a seconda della modalit? di gioco (condizioni di gameover() in mod squadre e nuove regole per la mod caos) per evitare di creare pi? classi partita o avere if inutili
+regole e comportamento di gioco definito dentro Partita (non dentro i giocatori) ?
+ai stupida: vede solo le carte che pu? giocare in mano e le gioca a caso, altrimenti pesca. quindi gli serve sapere la carta negli scarti e un riferimento a mazzo per pescare.
+
+si pu? aggiungere un campo colore(non nero) alla carta CambiaColore? metodo cambiaColore() che controlla se il valore della carta ? CambiaColore o piu4

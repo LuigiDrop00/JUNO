@@ -36,72 +36,128 @@ import model.Color;
 import model.Deck;
 import model.Entity;
 import model.Game;
-
+/**
+ * Controller that handles the GameView view
+ */
 @SuppressWarnings("deprecation")
 public class GameController implements Observer {
 
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-
+	
 	@FXML
 	private Button exitButton;
 	@FXML
 	private AnchorPane scenePane;
+	/**
+	 * The image of the player avatar or profile picture
+	 */
 	@FXML
 	private ImageView playerAvatar;
+	/**
+	 * Test of the nickname of the logged player
+	 */
 	@FXML
 	private Text playerName;
+	/**
+	 * Container for the card deck
+	 */
 	@FXML
 	private TilePane mazzoCarte;
+	/**
+	 * Text updated with the current color of the last card in the discard pile
+	 */
 	@FXML
 	private Text currentColor;
+	/**
+	 * Container for the hand of the logged player
+	 */
 	@FXML
 	private TilePane mano0;
+	/**
+	 * Container for the hand of the Ai number 1
+	 */
 	@FXML
 	private TilePane mano1;
+	/**
+	 * Container for the hand of the Ai number 2
+	 */
 	@FXML
 	private TilePane mano2;
+	/**
+	 * Container for the hand of the Ai number 3
+	 */
 	@FXML
 	private TilePane mano3;
+	/**
+	 * Image of the discarded cards
+	 */
 	@FXML
 	private ImageView scarti;
+	/**
+	 * Image of the first card of the deck
+	 */
 	@FXML
 	private ImageView mazzo;
+	/**
+	 * Image of the last discarded card
+	 */
 	@FXML
 	private ImageView lastPlayedCard;
+	/**
+	 * Pop-up that lets the logged player choose a color
+	 */
 	@FXML
 	private AnchorPane pannelloScegli;
-
+	/**
+	 * Changes the currentColor to GREEN 
+	 */
 	@FXML
 	private void clickGreen() {
 		onColorChoosen(Color.GREEN);
 	}
-
+	/**
+	 * Changes the currentColor to YELLOW
+	 */
 	@FXML
 	private void clickYellow() {
 		onColorChoosen(Color.YELLOW);
 	}
-
+	/**
+	 * Changes the currentColor to RED
+	 */
 	@FXML
 	private void clickRed() {
 		onColorChoosen(Color.RED);
 	}
-
+	/**
+	 * Changes the currentColor to BLUE
+	 */
 	@FXML
 	private void clickBlue() {
 		onColorChoosen(Color.BLUE);
 	}
-
+	/**
+	 * Makes the pannelloScegli pop-up appear
+	 */
 	private void openChooseColor() {
 		pannelloScegli.toFront();
 	}
-
+	/**
+	 * Changes the color of the last discarded card to the chosen color
+	 * @param choosenColor
+	 */
 	private void onColorChoosen(Color choosenColor) {
 		Game.pile.getFirst().setColor(choosenColor);
 		pannelloScegli.toBack();
 	}
-
+	/**
+	 * Plays the discard animation for the card chosen by the current player 
+	 * @param img
+	 * @param giocatore
+	 * @throws FileNotFoundException
+	 */
 	public void animateDiscard(ImageView img, int giocatore) throws FileNotFoundException {
 		// Point2D xyCarta = img.localToScene(img.getLayoutBounds().getMinX(),
 		// img.getLayoutBounds().getMinY());
@@ -158,7 +214,11 @@ public class GameController implements Observer {
 		PathTransition transition = new PathTransition(Duration.millis(1000), path, nuovaImg);
 		transition.play();
 	}
-
+	/**
+	 * Plays the draw animation for the current player
+	 * @param giocatore
+	 * @throws FileNotFoundException
+	 */
 	public void animateDraw(int giocatore) throws FileNotFoundException {
 		ImageView nuovaImg = new ImageView();
 		nuovaImg.setFitWidth(60);
@@ -240,30 +300,49 @@ public class GameController implements Observer {
 		});
 		transition.play();
 	}
-
+	/**
+	 * Informs the model of the card that the logged player chose to play 
+	 * @param path
+	 * @param event
+	 * @throws FileNotFoundException
+	 */
 	public void onDiscard(String path, MouseEvent event) throws FileNotFoundException {
 		lastPlayedCard = (ImageView) event.getTarget();
 		if (game.getTurn() == 0) {
 			game.playerPlay(Card.pathToCard(path));
 		}
 	}
-
+	/**
+	 * Informs the model the the logged player wants to draw
+	 * @param event
+	 * @throws FileNotFoundException
+	 */
 	public void onDraw(MouseEvent event) throws FileNotFoundException {
 		if (game.getTurn() == 0) {
 			game.playerDraw(players[game.getTurn()], 1);
 		}
 	}
-
+	/**
+	 * Instance of an object model.Game with which the GameView view is in communication
+	 */
 	Game game;
+	/**
+	 * List of players in the game
+	 */
 	Entity[] players;
+	/**
+	 * Music played during the game
+	 */
 	AudioManager music;
-	AudioManager draw;
-	AudioManager play;
-	AudioManager uno;
-	AudioManager error;
-	AudioManager win;
-	AudioManager loss;
-	
+	/**
+	 * Sound effect played during the game
+	 */
+	AudioManager draw, play, uno, error, win, loss;
+	/**
+	 * Initializes the model.Game instance and adds this GameController has an observer.
+	 * Initializes the audio files and plays the music. Initializes the view with the images of the cards.
+	 * @throws FileNotFoundException
+	 */
 	@FXML
 	public void initialize() throws FileNotFoundException {
 
@@ -300,7 +379,11 @@ public class GameController implements Observer {
 		game.addObserver(this);
 		game.aiTurn();
 	}
-
+	/**
+	 * Return to the MainMenu view and returns the cards in the players hands in the deck.
+	 * @param event
+	 * @throws IOException
+	 */
 	public void exit(ActionEvent event) throws IOException {
 
 		for (Entity e : players) {
@@ -319,19 +402,25 @@ public class GameController implements Observer {
 			stage.show();
 		}
 	}
-
+	/**
+	 * Lets the logged player pass their turn
+	 */
 	@FXML
 	private void passaTurno() {
 		System.out.println("passaTUrno");
 		game.pass();
 	}
-
+	/**
+	 * CHanges the uno state to true 
+	 */
 	@FXML
 	private void clickUno() {
 		System.out.println("ClickUno");
 		game.pressUno();
 	}
-
+	/**
+	 * Updates the view 
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		String action = (String) arg;
@@ -339,7 +428,7 @@ public class GameController implements Observer {
 		switch (action) {
 		case "Draw":
 			try {
-				animateDraw(game.getTurn(game.getSkip()));
+				animateDraw(game.nextTurn(game.getSkip()));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -411,8 +500,4 @@ public class GameController implements Observer {
 		System.out.println("-----------");
 	}
 
-	@FXML
-	public void rosso(MouseEvent e) {
-		System.out.println(e.getTarget());
-	}
 }

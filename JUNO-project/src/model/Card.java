@@ -2,7 +2,9 @@ package model;
 
 import java.nio.file.FileSystems;
 import java.util.regex.Pattern;
-
+/**
+ *An object representing a gaming card with a color and a value
+ */
 public class Card {
 
 	Card(Color color, Value VALUE ) {
@@ -33,6 +35,7 @@ public class Card {
 	
 	/**
 	 * ritorna il nome dell'immagine jpg corrispondente nella cartella cardImages
+	 * @return
 	 */
 	@Override
 	public String toString() {
@@ -44,7 +47,11 @@ public class Card {
 			return c.charAt(0)+c.toLowerCase().subSequence(1, color.toString().length()).toString()+"_"+v.charAt(0)+v.toLowerCase().subSequence(1, VALUE.toString().length()).toString()+".jpg";
 		}
 	}
-	
+	/**
+	 * Returns the Card object corresponding to the Sting s, which should be the path of a jpg image inside the cardImages directory
+	 * @param s
+	 * @return
+	 */
 	public static Card pathToCard(String s) {
 		System.out.println("URL:"+s);
 		String [] a=s.split("/");

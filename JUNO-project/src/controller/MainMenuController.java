@@ -22,17 +22,33 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoginState;
 import model.Player;
-
+/**
+ * Controller that handles the MainMenu view
+ */
 public class MainMenuController {
-
+	/**
+	 * Text with the nickname of the logged player
+	 */
 	@FXML
 	private Text nickname;
+	/**
+	 * Text with the level and experience of the logged player
+	 */
 	@FXML
 	private Text livello, livelloSuccessivo, expMinima, expMassima;
+	/**
+	 * The image of the logged player's profile picture
+	 */
 	@FXML
 	private ImageView profilePic;
+	/**
+	 * Container for the logged player's data card
+	 */
 	@FXML
 	private Pane profileCard;
+	/**
+	 * Progress experience bar of the logged player
+	 */
 	@FXML
 	private ProgressBar barraProgressi;
 
@@ -41,6 +57,10 @@ public class MainMenuController {
 	private Scene scene;
 	private Parent root;
 	
+	/**
+	 * Initializes the logged player and uses their data to update the player card
+	 * @throws FileNotFoundException
+	 */
 	@FXML
 	public void initialize() throws FileNotFoundException {
 		
